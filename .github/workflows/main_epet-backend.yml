@@ -56,5 +56,5 @@ jobs:
         with:
           app-name: 'epet-backend'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A798C6DB07524B21A2889AB8FB803DD8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ADCEAFDB63634EF79EF03FAB7C8C5436 }}
           package: .
