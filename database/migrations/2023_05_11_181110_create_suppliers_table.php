@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->char('USER_CPF', 11)->primary();
-            $table->string('FIRST_NAME', 25);
-            $table->string('LAST_NAME', 25);
-            $table->string('EMAIL', 100)->unique();
-            $table->integer('AGE');
-            $table->string('PASSWORD', 25);
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->char('SUPPLIER_CNPJ', 14)->primary();
+            $table->string('RAZAO_SOCIAL', 30);
+            $table->string('NOME_FANTASIA', 30);
+            $table->string('EMAIL', 256);
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
+            $table->integer('COMMERCIAL_PHONE');
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('suppliers');
     }
 };
