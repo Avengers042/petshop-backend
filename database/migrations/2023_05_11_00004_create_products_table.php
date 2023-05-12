@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('products', function (Blueprint $table) {
             $table->unsignedBigInteger('PRODUCT_ID')->autoIncrement();
             $table->string('NAME', 25);
-            $table->string('DESCRIPTION', 200);
+            $table->text('DESCRIPTION');
             $table->unsignedBigInteger('SUPPLIER_ID');
             $table->foreign('SUPPLIER_ID')->references('SUPPLIER_ID')->on('suppliers');
         });
