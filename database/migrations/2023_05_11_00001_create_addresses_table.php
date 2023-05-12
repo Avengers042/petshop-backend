@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->integer('ADDRESS_ID')->primary()->autoIncrement();
+            $table->unsignedBigInteger('ADDRESS_ID')->autoIncrement();
             $table->integer('NUMBER');
             $table->char('CEP', 8);
             $table->string('UF', 25);
             $table->string('DISTRICT', 25);
-            $table->string('PUBLIC_PLACE', 25);
-            $table->string('COMPLEMENT', 25);
+            $table->string('PUBLIC_PLACE', 100);
+            $table->string('COMPLEMENT', 25)->nullable();
         });
     }
 

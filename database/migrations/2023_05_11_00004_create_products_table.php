@@ -11,10 +11,11 @@ return new class extends Migration {
     public function up() : void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->integer('PRODUCT_ID')->primary()->autoIncrement();
+            $table->unsignedBigInteger('PRODUCT_ID')->autoIncrement();
             $table->string('NAME', 25);
             $table->string('DESCRIPTION', 200);
-            $table->foreign('SUPPLIER_CNPJ')->references('SUPPLIER_CNPJ')->on('suppliers');
+            $table->unsignedBigInteger('SUPPLIER_ID');
+            $table->foreign('SUPPLIER_ID')->references('SUPPLIER_ID')->on('suppliers');
         });
     }
 
