@@ -16,14 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::controller(AddressController::class)->group(function () {
-//     Route::get('/index', 'index')->name('address.index');
-//     Route::post('/store', 'store')->name('address.store');
-//     Route::get('/edit/{id}', 'edit')->name('address.edit');
-//     Route::put('/update/{id}', 'update')->name('address.update');
-//     Route::delete('/destroy/{id}', 'destroy')->name('address.destroy');
-// });
-
 Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::apiResource('purchases', PurchaseController::class);
     Route::apiResource('suppliers', SupplierController::class);
