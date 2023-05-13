@@ -12,6 +12,9 @@ class Address extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'ADDRESS_ID';
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,8 +27,6 @@ class Address extends Model
         'DISTRICT',
         'PUBLIC_PLACE',
     ];
-
-    public $timestamps = false;
 
     public function users(): BelongsToMany
     {

@@ -10,6 +10,8 @@ class Stock extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -19,8 +21,6 @@ class Stock extends Model
         'PRODUCT_ID',
         'AMOUNT',
     ];
-
-    public $timestamps = false;
 
     public function product(): HasOne
     {

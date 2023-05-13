@@ -11,6 +11,9 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'PRODUCT_ID';
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,8 +24,6 @@ class Product extends Model
         'DESCRIPTION',
         'SUPPLIER_ID'
     ];
-
-    public $timestamps = false;
 
     public function supplier(): BelongsTo
     {

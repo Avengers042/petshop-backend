@@ -11,6 +11,9 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'PURCHASE_ID';
+    public $timestamps = false;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -20,8 +23,6 @@ class Purchase extends Model
         'PRODUCT_ID',
         'USER_ID'
     ];
-
-    public $timestamps = false;
 
     public function products(): HasMany
     {
