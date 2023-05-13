@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\StoreStockRequest;
 use App\Http\Requests\UpdateStockRequest;
+use App\Models\Product;
 use App\Models\Stock;
+use App\Http\Resources\StockResource;
 
 class StockController extends Controller
 {
@@ -17,19 +20,11 @@ class StockController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreStockRequest $request)
     {
-        //
+        return new StockResource(Stock::create($request->all()));
     }
 
     /**
@@ -37,15 +32,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Stock $stock)
-    {
-        //
+        return new StockResource($stock);
     }
 
     /**
@@ -53,7 +40,7 @@ class StockController extends Controller
      */
     public function update(UpdateStockRequest $request, Stock $stock)
     {
-        //
+        $stock->update($request->all());
     }
 
     /**
@@ -61,6 +48,6 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock)
     {
-        //
+        $stock->delete();
     }
 }
