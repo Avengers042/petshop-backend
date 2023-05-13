@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('USER_ID');
             $table->foreign('PRODUCT_ID')->references('PRODUCT_ID')->on('products');
             $table->foreign('USER_ID')->references('USER_ID')->on('users');
+            $table->index('PURCHASE_ID');
         });
     }
 

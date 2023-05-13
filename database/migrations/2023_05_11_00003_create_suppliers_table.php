@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('COMMERCIAL_PHONE');
             $table->unsignedBigInteger('ADDRESS_ID');
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
+            $table->index('SUPPLIER_ID');
         });
     }
 

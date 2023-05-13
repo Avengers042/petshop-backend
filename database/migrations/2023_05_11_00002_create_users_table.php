@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('PASSWORD', 100);
             $table->unsignedBigInteger('ADDRESS_ID'); 
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
+            $table->index('USER_ID');
         });
     }
 

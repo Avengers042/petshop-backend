@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('DISTRICT', 25);
             $table->string('PUBLIC_PLACE', 100);
             $table->string('COMPLEMENT', 25)->nullable();
+            $table->index('ADDRESS_ID');
         });
     }
 
