@@ -9,7 +9,7 @@ class StorePurchaseRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,7 +19,7 @@ class StorePurchaseRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'productId' => ['required'],
@@ -27,7 +27,8 @@ class StorePurchaseRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation() {
+    protected function prepareForValidation()
+    {
         $this->merge([
             'PRODUCT_ID' => $this->productId,
             'USER_ID' => $this->userId,
