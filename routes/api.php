@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace' => 'App\Http\Controllers'], function() {
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('purchases', PurchaseController::class);
     Route::apiResource('suppliers', SupplierController::class);
+    Route::apiResource('stocks', StockController::class);
+    Route::apiResource('products', ProductController::class);
 });
