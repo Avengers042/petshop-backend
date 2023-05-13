@@ -10,7 +10,9 @@ class Stock extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'PRODUCT_ID';
     public $timestamps = false;
+
 
     /**
      * The attributes that are mass assignable.
