@@ -4,63 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
+use App\Http\Resources\AddressResource;
+use App\Http\Resources\AddressCollection;
 use App\Models\Address;
 
-class AddressController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+class AddressController extends Controller {
+
+    public function index() {
+        return response()->json(new AddressCollection(Address::all()));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function store(StoreAddressRequest $request) {
+        try {
+            new AddressResource(Address::create($request->all()));
+            return response('Endereço cadastrado com sucesso.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAddressRequest $request)
-    {
-        //
+    public function show(Address $address) {
+        return response()->json(new AddressResource($address));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Address $address)
-    {
-        //
+    public function update(UpdateAddressRequest $request, Address $address) {
+        if(!$address){
+            return response('Endereço não cadastrado.');
+        }
+
+        try {
+            new AddressResource($address->update($request->all()));
+
+            return response('Endereço atualizado.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Address $address)
-    {
-        //
-    }
+    public function destroy(Address $address) {
+        if(!$address){
+            return response('Endereço não cadastrado.');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAddressRequest $request, Address $address)
-    {
-        //
-    }
+        try {
+            $address->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Address $address)
-    {
-        //
+            return response('Endereço excluído.');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

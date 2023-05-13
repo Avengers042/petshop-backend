@@ -26,6 +26,7 @@ class Address extends Model
         'UF',
         'DISTRICT',
         'PUBLIC_PLACE',
+        'COMPLEMENT'
     ];
 
     public function users(): BelongsToMany
