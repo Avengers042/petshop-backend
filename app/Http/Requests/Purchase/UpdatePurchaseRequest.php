@@ -9,7 +9,7 @@ class UpdatePurchaseRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,7 +19,7 @@ class UpdatePurchaseRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'productId' => ['sometimes', 'required'],
@@ -27,10 +27,13 @@ class UpdatePurchaseRequest extends FormRequest
         ];
     }
 
-    protected function prepareForValidation() {
-        $this->merge([
-            'PRODUCT_ID' => $this->productId,
-            'USER_ID' => $this->userId,
-        ]);
+    protected function prepareForValidation()
+    {
+        if ($this->productId
+            && $this->userId)
+            $this->merge([
+                'PRODUCT_ID' => $this->productId,
+                'USER_ID' => $this->userId,
+            ]);
     }
 }
