@@ -20,4 +20,5 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::apiResource('purchases', PurchaseController::class);
     Route::apiResource('suppliers', SupplierController::class);
     Route::apiResource('addresses', AddressController::class);
+    Route::apiResource('users', UserController::class);
 });
