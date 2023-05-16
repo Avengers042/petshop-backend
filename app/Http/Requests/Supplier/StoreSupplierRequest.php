@@ -26,7 +26,7 @@ class StoreSupplierRequest extends FormRequest
             'tradeName' => ['required'],
             'cnpj' => [
                 'required',
-                'regex:/^[0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2}$/',
+                'size:14',
                 'unique:App\Models\Supplier,cnpj',
                 'numeric'
             ],
@@ -66,14 +66,17 @@ class StoreSupplierRequest extends FormRequest
     public function messages() : array
     {
         $messages = array(
-            'required' => ':Attribute inválido',
-            'email.unique' => 'Email já existente',
-            'email.email' => 'Email inválido',
             'corporateName.required' => 'Razão social inválida',
+            'tradeName.required' => 'Nome fantasia inválido',
             'cnpj.unique' => 'CNPJ já existente',
             'cnpj.required' => 'CNPJ inválido.',
             'cnpj.numeric' => 'O CNPJ deve conter só números',
-            'cnpj.regex' => 'CNPJ inválido'
+            'cnpj.size' => 'CNPJ deve ter somente 14 números',
+            'email.unique' => 'Email já existente',
+            'email.email' => 'Email inválido',
+            'commercialPhone.required' => 'Telefone comercial inválido',
+            'commercialPhone.numeric' => 'Telefone deve conter só números',
+            'addressId.required' => 'Endereço inválido'
         );
 
         return $messages;
