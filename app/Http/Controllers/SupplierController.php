@@ -39,7 +39,7 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        $supplier->update($request->all());
+        return new SupplierResource(tap($supplier)->update($request->all()));
     }
 
     /**
@@ -47,6 +47,6 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        $supplier->delete();
+        return new SupplierResource(tap($supplier)->delete());
     }
 }

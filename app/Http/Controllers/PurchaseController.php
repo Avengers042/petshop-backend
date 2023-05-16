@@ -39,7 +39,7 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
-        $purchase->update($request->all());
+        return new PurchaseResource(tap($purchase)->update($request->all()));
     }
 
     /**
@@ -47,6 +47,6 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        $purchase->delete();
+        return new PurchaseResource(tap($purchase)->delete());
     }
 }

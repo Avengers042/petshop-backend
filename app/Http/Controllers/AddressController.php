@@ -39,7 +39,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address)
     {
-        return $address->update($request->all());
+        return new AddressResource(tap($address)->update($request->all()));
     }
 
     /**
@@ -47,6 +47,6 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        return $address->delete();
+        return new AddressResource(tap($address)->delete());
     }
 }

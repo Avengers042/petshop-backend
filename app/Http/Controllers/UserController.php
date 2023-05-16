@@ -7,6 +7,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\User\UserCollection;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -39,14 +40,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return $user->update($request->all());
+        return new UserResource(tap($user)->update($request->all()));
     }
 
 
     /**
      * Remove the specified resource from storage.
-     */public function destroy(User $user)
+     */
+    public function destroy(User $user)
     {
-        return $user->delete();
+        return new UserResource(tap($user)->delete());
     }
 }
