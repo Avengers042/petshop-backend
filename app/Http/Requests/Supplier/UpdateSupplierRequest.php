@@ -33,7 +33,7 @@ class UpdateSupplierRequest extends FormRequest
             'cnpj' => [
                 'sometimes',
                 'required',
-                'size:14',
+                'digits:14',
                 'unique:App\Models\Supplier,cnpj',
                 'numeric'
             ],
@@ -89,7 +89,7 @@ class UpdateSupplierRequest extends FormRequest
             'cnpj.unique' => 'CNPJ já existente',
             'cnpj.required' => 'CNPJ inválido.',
             'cnpj.numeric' => 'O CNPJ deve conter só números',
-            'cnpj.size' => 'CNPJ deve ter somente 14 números',
+            'cnpj.digits' => 'CNPJ deve ter somente 14 números',
             'email.unique' => 'Email já existente',
             'email.email' => 'Email inválido',
             'commercialPhone.required' => 'Telefone comercial inválido',
