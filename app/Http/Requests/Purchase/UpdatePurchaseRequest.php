@@ -21,9 +21,12 @@ class UpdatePurchaseRequest extends FormRequest
      */
     public function rules() : array
     {
+        $method = $this->getMethod();
+        $sometimes = $method == 'PATCH' ? 'sometimes' : null;
+        
         return [
-            'productId' => ['sometimes', 'required'],
-            'userId' => ['sometimes', 'required'],
+            'productId' => [$sometimes, 'required'],
+            'userId' => [$sometimes, 'required'],
         ];
     }
 
@@ -32,12 +35,11 @@ class UpdatePurchaseRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        if ($this->productId
-            && $this->userId)
-            $this->merge([
-                'PRODUCT_ID' => $this->productId,
-                'USER_ID' => $this->userId,
-            ]);
+        if ($this->productId)
+            $this->merge(['PRODUCT_ID' => $this->productId]);
+
+        if ($this->userId)
+            $this->merge(['USER_ID' => $this->userId,]);
     }
 
     /**

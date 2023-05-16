@@ -21,35 +21,38 @@ class UpdateSupplierRequest extends FormRequest
      */
     public function rules() : array
     {
+        $method = $this->getMethod();
+        $sometimes = $method == 'PATCH' ? 'sometimes' : null;
+
         return [
             'corporateName' => [
-                'sometimes',
+                $sometimes,
                 'required'
             ],
             'tradeName' => [
-                'sometimes',
+                $sometimes,
                 'required'
             ],
             'cnpj' => [
-                'sometimes',
+                $sometimes,
                 'required',
                 'digits:14',
                 'unique:App\Models\Supplier,cnpj',
                 'numeric'
             ],
             'email' => [
-                'sometimes',
+                $sometimes,
                 'required',
                 'email',
                 'unique:App\Models\Supplier,email'
             ],
             'commercialPhone' => [
-                'sometimes',
+                $sometimes,
                 'required',
                 'numeric'
             ],
             'addressId' => [
-                'sometimes',
+                $sometimes,
                 'required'
             ],
         ];
@@ -60,20 +63,23 @@ class UpdateSupplierRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        if ($this->corporateName
-            && $this->tradeName
-            && $this->cnpj
-            && $this->email
-            && $this->commercialPhone
-            && $this->addressId)
-            $this->merge([
-                'CORPORATE_NAME' => $this->corporateName,
-                'TRADE_NAME' => $this->tradeName,
-                'CNPJ' => $this->cnpj,
-                'EMAIL' => $this->email,
-                'COMMERCIAL_PHONE' => $this->commercialPhone,
-                'ADDRESS_ID' => $this->addressId
-            ]);
+        if ($this->corporateName)
+            $this->merge(['CORPORATE_NAME' => $this->corporateName]);
+
+        if ($this->tradeName)
+            $this->merge(['TRADE_NAME' => $this->tradeName]);
+
+        if ($this->cnpj)
+            $this->merge(['CNPJ' => $this->cnpj]);
+
+        if ($this->email)
+            $this->merge(['EMAIL' => $this->email]);
+
+        if ($this->commercialPhone)
+            $this->merge(['COMMERCIAL_PHONE' => $this->commercialPhone]);
+
+        if ($this->addressId)
+            $this->merge(['ADDRESS_ID' => $this->addressId]);
     }
 
     /**

@@ -4,11 +4,13 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest {
+class StoreUserRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool {
+    public function authorize() : bool
+    {
         return true;
     }
 
@@ -17,7 +19,8 @@ class StoreUserRequest extends FormRequest {
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array {
+    public function rules() : array
+    {
         return [
             'firstName' => ['sometimes', 'required'],
             'lastName' => ['sometimes', 'required'],
@@ -29,15 +32,19 @@ class StoreUserRequest extends FormRequest {
         ];
     }
 
-    protected function prepareForValidation() {
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
         $this->merge([
-            'FIRST_NAME' => $this->FIRST_NAME,
-            'LAST_NAME' => $this->LAST_NAME,
-            'CPF' => $this->CPF,
-            'EMAIL' => $this->EMAIL,
-            'AGE' => $this->AGE,
-            'PASSWORD' => $this->PASSWORD,
-            'ADDRESS_ID' => $this->ADDRESS_ID,
+            'FIRST_NAME' => $this->firstName,
+            'LAST_NAME' => $this->lastName,
+            'CPF' => $this->cpf,
+            'EMAIL' => $this->email,
+            'AGE' => $this->age,
+            'PASSWORD' => $this->password,
+            'ADDRESS_ID' => $this->addressId
         ]);
     }
 }
