@@ -8,25 +8,45 @@ use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\Address\AddressCollection;
 use App\Models\Address;
 
-class AddressController extends Controller {
-
-    public function index() {
+class AddressController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
         return new AddressCollection(Address::all());
     }
 
-    public function store(StoreAddressRequest $request) {
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreAddressRequest $request)
+    {
         return new AddressResource(Address::create($request->all()));
     }
 
-    public function show(Address $address) {
+    /**
+     * Display the specified resource.
+     */
+    public function show(Address $address)
+    {
         return new AddressResource($address);
     }
 
-    public function update(UpdateAddressRequest $request, Address $address) {
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateAddressRequest $request, Address $address)
+    {
         return $address->update($request->all());
     }
 
-    public function destroy(Address $address) {
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Address $address)
+    {
         return $address->delete();
     }
 }
