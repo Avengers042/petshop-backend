@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -31,22 +32,22 @@ class UpdateUserRequest extends FormRequest
     }
 
     protected function prepareForValidation() {
-        if ($this->firstName
-        && $this->lastName
-        && $this->cpf
-        && $this->email
-        && $this->age
-        && $this->password
-        && $this->addressId
+        if ($this->FIRST_NAME
+        && $this->LAST_NAME
+        && $this->CPF
+        && $this->EMAIL
+        && $this->AGE
+        && $this->PASSWORD
+        && $this->ADDRESS_ID
         )
         $this->merge([
-            'FIRST_NAME' => $this->firstName,
-            'LAST_NAME' => $this->lastName,
-            'CPF' => $this->cpf,
-            'EMAIL' => $this->email,
-            'AGE' => $this->age,
-            'PASSWORD' => $this->password,
-            'ADDRESS_ID' => $this->addressId,
+            'FIRST_NAME' => $this->FIRST_NAME,
+            'LAST_NAME' => $this->LAST_NAME,
+            'CPF' => $this->CPF,
+            'EMAIL' => $this->EMAIL,
+            'AGE' => $this->AGE,
+            'PASSWORD' => $this->PASSWORD,
+            'ADDRESS_ID' => $this->ADDRESS_ID,
         ]);
     }
 }

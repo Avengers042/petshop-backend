@@ -12,8 +12,7 @@ class AddressResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
-    {
+    public function toArray(Request $request): array {
         return [
             'addressId' => $this->ADDRESS_ID,
             'number' => $this->NUMBER,

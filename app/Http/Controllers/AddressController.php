@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAddressRequest;
-use App\Http\Requests\UpdateAddressRequest;
+use App\Http\Requests\Address\StoreAddressRequest;
+use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\Address\AddressResource;
 use App\Http\Resources\Address\AddressCollection;
 use App\Models\Address;
@@ -11,47 +11,22 @@ use App\Models\Address;
 class AddressController extends Controller {
 
     public function index() {
-        return response()->json(new AddressCollection(Address::all()));
+        return new AddressCollection(Address::all());
     }
 
     public function store(StoreAddressRequest $request) {
-        try {
-            new AddressResource(Address::create($request->all()));
-            return response('Endereço cadastrado com sucesso.');
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return new AddressResource(Address::create($request->all()));
     }
 
     public function show(Address $address) {
-        return response()->json(new AddressResource($address));
+        return new AddressResource($address);
     }
 
     public function update(UpdateAddressRequest $request, Address $address) {
-        if(!$address){
-            return response('Endereço não cadastrado.');
-        }
-
-        try {
-            new AddressResource($address->update($request->all()));
-
-            return response('Endereço atualizado.');
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return $address->update($request->all());
     }
 
     public function destroy(Address $address) {
-        if(!$address){
-            return response('Endereço não cadastrado.');
-        }
-
-        try {
-            $address->delete();
-
-            return response('Endereço excluído.');
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return $address->delete();
     }
 }
