@@ -22,15 +22,42 @@ class UpdateSupplierRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'corporateName' => ['sometimes', 'required'],
-            'tradeName' => ['sometimes', 'required'],
-            'cnpj' => ['sometimes', 'required'],
-            'email' => ['sometimes', 'required', 'email'],
-            'commercialPhone' => ['sometimes', 'required'],
-            'addressId' => ['sometimes', 'required']
+            'corporateName' => [
+                'sometimes',
+                'required'
+            ],
+            'tradeName' => [
+                'sometimes',
+                'required'
+            ],
+            'cnpj' => [
+                'sometimes',
+                'required',
+                'regex:/^[0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2}$/',
+                'unique:App\Models\Supplier,cnpj',
+                'numeric'
+            ],
+            'email' => [
+                'sometimes',
+                'required',
+                'email',
+                'unique:App\Models\Supplier,email'
+            ],
+            'commercialPhone' => [
+                'sometimes',
+                'required',
+                'numeric'
+            ],
+            'addressId' => [
+                'sometimes',
+                'required'
+            ],
         ];
     }
 
+    /**
+     * Prepare the data for validation.
+     */
     protected function prepareForValidation()
     {
         if ($this->corporateName
@@ -47,5 +74,26 @@ class UpdateSupplierRequest extends FormRequest
                 'COMMERCIAL_PHONE' => $this->commercialPhone,
                 'ADDRESS_ID' => $this->addressId
             ]);
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages() : array
+    {
+        $messages = array(
+            'required' => ':Attribute inválido',
+            'email.unique' => 'Email já existente',
+            'email.email' => 'Email inválido',
+            'corporateName.required' => 'Razão social inválida',
+            'cnpj.unique' => 'CNPJ já existente',
+            'cnpj.required' => 'CNPJ inválido.',
+            'cnpj.numeric' => 'O CNPJ deve conter só números',
+            'cnpj.regex' => 'CNPJ inválido'
+        );
+
+        return $messages;
     }
 }
