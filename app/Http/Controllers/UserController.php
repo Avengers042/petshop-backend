@@ -10,23 +10,43 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index() {
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
         return new UserCollection(User::all());
     }
 
-    public function store(StoreUserRequest $request) {
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreUserRequest $request)
+    {
         return new UserResource(User::create($request->all()));
     }
 
-    public function show(User $user) {
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $user)
+    {
         return new UserResource($user);
     }
 
-    public function update(UpdateUserRequest $request, User $user) {
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateUserRequest $request, User $user)
+    {
         return $user->update($request->all());
     }
 
-    public function destroy(User $user) {
+
+    /**
+     * Remove the specified resource from storage.
+     */public function destroy(User $user)
+    {
         return $user->delete();
     }
 }
