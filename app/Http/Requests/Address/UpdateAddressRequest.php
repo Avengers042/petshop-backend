@@ -9,7 +9,8 @@ class UpdateAddressRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool {
+    public function authorize() : bool
+    {
         return true;
     }
 
@@ -18,32 +19,42 @@ class UpdateAddressRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array {
+    public function rules() : array
+    {
+        $method = $this->getMethod();
+        $sometimes = $method == 'PATCH' ? 'sometimes' : null;
+
         return [
-            'number' => ['sometimes', 'required'],
-            'cep' => ['sometimes', 'required'],
-            'uf' => ['sometimes', 'required'],
-            'district' => ['sometimes', 'required'],
-            'publicPlace' => ['sometimes', 'required'],
-            'complement' => ['sometimes', 'required'],
+            'number' => [$sometimes, 'required'],
+            'cep' => [$sometimes, 'required'],
+            'uf' => [$sometimes, 'required'],
+            'district' => [$sometimes, 'required'],
+            'publicPlace' => [$sometimes, 'required'],
+            'complement' => [$sometimes, 'required'],
         ];
     }
 
-    protected function prepareForValidation() {
-        if ($this->NUMBER
-        && $this->CEP
-        && $this->UF
-        && $this->DISTRICT
-        && $this->PUBLIC_PLACE
-        && $this->COMPLEMENT
-        )
-        $this->merge([
-            'NUMBER' => $this->NUMBER,
-            'CEP' => $this->CEP,
-            'UF' => $this->UF,
-            'DISTRICT' => $this->DISTRICT,
-            'PUBLIC_PLACE' => $this->PUBLIC_PLACE,
-            'COMPLEMENT' => $this->COMPLEMENT
-        ]);
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        if ($this->number)
+            $this->merge(['NUMBER' => $this->number]);
+
+        if ($this->cep)
+            $this->merge(['CEP' => $this->cep]);
+
+        if ($this->uf)
+            $this->merge(['UF' => $this->uf]);
+
+        if ($this->district)
+            $this->merge(['DISTRICT' => $this->district]);
+
+        if ($this->publicPlace)
+            $this->merge(['PUBLIC_PLACE' => $this->publicPlace]);
+
+        if ($this->complement)
+            $this->merge(['COMPLEMENT' => $this->complement]);
     }
 }

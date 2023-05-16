@@ -9,7 +9,7 @@ class StoreAddressRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,10 +19,30 @@ class StoreAddressRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
-            //
+            'number' => ['required'],
+            'cep' => ['required'],
+            'uf' => ['required'],
+            'district' => ['required'],
+            'publicPlace' => ['required'],
+            'complement' => ['required'],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'NUMBER' => $this->number,
+            'CEP' => $this->cep,
+            'UF' => $this->uf,
+            'DISTRICT' => $this->district,
+            'PUBLIC_PLACE' => $this->publicPlace,
+            'COMPLEMENT' => $this->complement
+        ]);
     }
 }
