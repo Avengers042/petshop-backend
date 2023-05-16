@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAddressRequest;
 use App\Http\Requests\UpdateAddressRequest;
-use App\Http\Resources\AddressResource;
-use App\Http\Resources\AddressCollection;
+use App\Http\Resources\Address\AddressResource;
+use App\Http\Resources\Address\AddressCollection;
 use App\Models\Address;
 
 class AddressController extends Controller {
