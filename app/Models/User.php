@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
+class User extends Model {
+    use HasApiTokens, HasFactory;
 
     protected $primaryKey = 'USER_ID';
     public $timestamps = false;
@@ -40,13 +38,11 @@ class User extends Authenticatable
         'PASSWORD',
     ];
 
-    public function purchases(): HasMany
-    {
+    public function purchases(): HasMany {
         return $this->hasMany(Purchase::class, 'PURCHASE_ID', 'PURCHASE_ID');
     }
 
-    public function address(): HasOne
-    {
+    public function address(): HasOne {
         return $this->HasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
     }
 }

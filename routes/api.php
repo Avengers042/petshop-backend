@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('purchases', PurchaseController::class);
     Route::apiResource('suppliers', SupplierController::class);
+    Route::apiResource('addresses', AddressController::class);
+    Route::apiResource('users', UserController::class);
     Route::apiResource('stocks', StockController::class);
     Route::apiResource('products', ProductController::class);
 });

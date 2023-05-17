@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAddressRequest;
-use App\Http\Requests\UpdateAddressRequest;
+use App\Http\Requests\Address\StoreAddressRequest;
+use App\Http\Requests\Address\UpdateAddressRequest;
+use App\Http\Resources\Address\AddressResource;
+use App\Http\Resources\Address\AddressCollection;
 use App\Models\Address;
 
 class AddressController extends Controller
@@ -13,15 +15,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new AddressCollection(Address::all());
     }
 
     /**
@@ -29,7 +23,7 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        //
+        return new AddressResource(Address::create($request->all()));
     }
 
     /**
@@ -37,15 +31,7 @@ class AddressController extends Controller
      */
     public function show(Address $address)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Address $address)
-    {
-        //
+        return new AddressResource($address);
     }
 
     /**
@@ -53,7 +39,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address)
     {
-        //
+        return new AddressResource(tap($address)->update($request->all()));
     }
 
     /**
@@ -61,6 +47,6 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        //
+        return new AddressResource(tap($address)->delete());
     }
 }

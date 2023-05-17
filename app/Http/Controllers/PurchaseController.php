@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePurchaseRequest;
-use App\Http\Requests\UpdatePurchaseRequest;
+use App\Http\Requests\Purchase\StorePurchaseRequest;
+use App\Http\Requests\Purchase\UpdatePurchaseRequest;
+use App\Http\Resources\Purchase\PurchaseCollection;
+use App\Http\Resources\Purchase\PurchaseResource;
 use App\Models\Purchase;
 
 class PurchaseController extends Controller
@@ -13,15 +15,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new PurchaseCollection(Purchase::all());
     }
 
     /**
@@ -29,7 +23,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        //
+        return new PurchaseResource(Purchase::create($request->all()));
     }
 
     /**
@@ -37,15 +31,7 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Purchase $purchase)
-    {
-        //
+        return new PurchaseResource($purchase);
     }
 
     /**
@@ -53,7 +39,7 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
-        //
+        return new PurchaseResource(tap($purchase)->update($request->all()));
     }
 
     /**
@@ -61,6 +47,6 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        //
+        return new PurchaseResource(tap($purchase)->delete());
     }
 }
