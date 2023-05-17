@@ -54,12 +54,6 @@ class Handler extends ExceptionHandler
             ], 503);
         });
 
-        $this->renderable(function (QueryException $e) {
-            return response()->json([
-                'message' => 'Operação inválida'
-            ], 400);
-        });
-
         $this->renderable(function (NotFoundHttpException $e) {
             return response()->json([
                 'message' => 'Não encontrado'

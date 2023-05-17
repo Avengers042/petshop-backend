@@ -22,12 +22,12 @@ class StoreUserRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'firstName' => ['sometimes', 'required'],
+            'firstName' => ['required'],
             'lastName' => ['sometimes', 'required'],
-            'cpf' => ['sometimes', 'required'],
-            'email' => ['sometimes', 'required'],
+            'cpf' => ['required'],
+            'email' => ['required'],
             'age' => ['sometimes', 'required'],
-            'password' => ['sometimes', 'required'],
+            'password' => ['required'],
             'addressId' => ['sometimes', 'required']
         ];
     }
@@ -46,5 +46,25 @@ class StoreUserRequest extends FormRequest
             'PASSWORD' => $this->password,
             'ADDRESS_ID' => $this->addressId
         ]);
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages() : array
+    {
+        $messages = array(
+            'firstName.required' => 'Nome inválido',
+            'lastName.required' => 'Último nome inválido',
+            'cpf.required' => 'CPF inválido',
+            'email.required' => 'Email inválido',
+            'age.required' => 'Idade inválida',
+            'password.required' => 'Senha inválida',
+            'addressId.required' => 'Endereço inválido'
+        );
+
+        return $messages;
     }
 }

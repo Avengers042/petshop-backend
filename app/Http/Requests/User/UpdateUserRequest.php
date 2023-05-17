@@ -62,4 +62,24 @@ class UpdateUserRequest extends FormRequest
         if ($this->addressId)
             $this->merge(['ADDRESS_ID' => $this->addressId]);
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages() : array
+    {
+        $messages = array(
+            'firstName.required' => 'Nome inválido',
+            'lastName.required' => 'Último nome inválido',
+            'cpf.required' => 'CPF inválido',
+            'email.required' => 'Email inválido',
+            'age.required' => 'Idade inválida',
+            'password.required' => 'Senha inválida',
+            'addressId.required' => 'Endereço inválido'
+        );
+
+        return $messages;
+    }
 }
