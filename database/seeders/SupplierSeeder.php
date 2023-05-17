@@ -13,7 +13,7 @@ class SupplierSeeder extends Seeder
     public function run() : void
     {
         Supplier::factory()
-            ->count(100)
+            ->count(25)
             ->create();
     }
 }

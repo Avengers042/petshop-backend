@@ -13,7 +13,7 @@ class AddressSeeder extends Seeder
     public function run() : void
     {
         Address::factory()
-            ->count(100)
+            ->count(25)
             ->create();
     }
 }
