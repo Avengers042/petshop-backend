@@ -22,9 +22,9 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'required'],
-            'description' => ['sometimes', 'required'],
-            'supplierId' => ['sometimes', 'required']
+            'name' => ['required'],
+            'description' => ['required'],
+            'supplierId' => ['required']
         ];
     }
 
@@ -39,12 +39,19 @@ class StoreProductRequest extends FormRequest
 
     }
 
-    public function messages(): array
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages() : array
     {
-        return [
+        $messages = array(
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
-            'supplierId.required' => 'Fornecedor inválido.',
-        ];
+            'supplierId.required' => 'Fornecedor inválido.'
+        );
+
+        return $messages;
     }
 }

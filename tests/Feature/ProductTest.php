@@ -56,19 +56,25 @@ class ProductTest extends TestCase
         $product = [
             'name' => "test",
             'description' => "testdesc",
-            'supplierId' => 26,
+            'supplierId' => 1,
         ];
 
         $productInvalid = [
-            'name' => "",
             'description' => "",
             'supplierId' => 0,
         ];
 
+        $productNotFound = [
+            'name' => "test",
+            'description' => "testdesc",
+            'supplierId' => 100,
+        ];
+
         $responseValid = $this->withHeaders($this->headers)->post("$this->baseURL", $product);
-        $responseInvalid = $this->post("$this->baseURL", ['productId' => 1]);
+        $responseInvalid = $this->post("$this->baseURL", $productInvalid);
+        
         $responseNull = $this->post("$this->baseURL");
-        // $responseNotFoundProduct = $this->post("$this->baseURL", $productInvalid);
+        $responseNotFoundProduct = $this->post("$this->baseURL", $productNotFound);
 
         $responseValid
             ->assertCreated()
@@ -81,14 +87,17 @@ class ProductTest extends TestCase
                         fn(AssertableJson $json) =>
                         $json
                             ->hasAll('productId', 'name', 'description', 'supplierId')
-                            ->where('productId', 1)
-                            ->where('supplierId', 26)
+                            ->whereAll([
+                                'name' => 'test',
+                                'description' => 'testdesc',
+                                'supplierId' => 1,
+                            ])
                     )
             );
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        // $responseNotFoundProduct->assertServiceUnavailable();
+        $responseNotFoundProduct->assertServiceUnavailable();
     }
 
     /**
@@ -111,7 +120,7 @@ class ProductTest extends TestCase
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $product);
         $responseInvalid = $this->put("$this->baseURL/1", ['name' => 'teste']);
         $responseNull = $this->put("$this->baseURL/1");
-        // $responseNotFoundProduct = $this->put("$this->baseURL/1", $productInvalid);
+        $responseNotFoundProduct = $this->put("$this->baseURL/100", $productInvalid);
 
         $responseValid
             ->assertOk()
@@ -131,7 +140,7 @@ class ProductTest extends TestCase
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        // $responseNotFoundProduct->assertServiceUnavailable();
+        $responseNotFoundProduct->assertNotFound();
     }
 
     /**

@@ -9,7 +9,7 @@ class UpdateProductRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,34 +19,43 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
+        $method = $this->getMethod();
+        $sometimes = $method == 'PATCH' ? 'sometimes' : null;
+
         return [
-            'name' => ['sometimes','required'],
-            'description' => ['sometimes','required'],
-            'supplierId' => ['sometimes', 'required']
+            'name' => [$sometimes, 'required'],
+            'description' => [$sometimes, 'required'],
+            'supplierId' => [$sometimes, 'required']
         ];
     }
 
     protected function prepareForValidation()
     {
-        if ($this->name && $this->description && $this->supplierId)
-            $this->merge([
-                'NAME' => $this->name,
-                'DESCRIPTION' => $this->description,
-                'SUPPLIER_ID' => $this->supplierId,
-            ]);
+        if ($this->name)
+            $this->merge(['NAME' => $this->name]);
 
+        if ($this->description)
+            $this->merge(['DESCRIPTION' => $this->description]);
+
+        if ($this->supplierId)
+            $this->merge(['SUPPLIER_ID' => $this->supplierId]);
     }
 
-
-    public function messages(): array
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages() : array
     {
-        return [
+        $messages = array(
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
-            'supplierId.required' => 'Fornecedor inválido.',
-            'supplierId.exists' => 'Fornecedor inválido.',
-        ];
+            'supplierId.required' => 'Fornecedor inválido.'
+        );
+
+        return $messages;
     }
 }
