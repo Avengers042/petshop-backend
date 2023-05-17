@@ -38,4 +38,13 @@ class StoreProductRequest extends FormRequest
             ]);
 
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Nome inválido.',
+            'description.required' => 'Descrição inválida.',
+            'supplierId.required' => 'Fornecedor inválido.',
+        ];
+    }
 }
