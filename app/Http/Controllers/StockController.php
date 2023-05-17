@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePurchaseRequest;
-use App\Http\Requests\StoreStockRequest;
-use App\Http\Requests\UpdateStockRequest;
 use App\Models\Product;
 use App\Models\Stock;
-use App\Http\Resources\StockResource;
+use App\Http\Requests\Stock\UpdateStockRequest;
+use App\Http\Requests\Stock\StoreStockRequest;
+use App\Http\Resources\Stock\StockResource;
+use App\Http\Resources\Stock\StockCollection;
 
 class StockController extends Controller
 {
@@ -16,7 +16,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        return new StockCollection(Stock::all());
     }
 
     /**

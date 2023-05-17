@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\Product\ProductResource;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return new ProductCollection(Product::all());
     }
 
     /**
