@@ -34,9 +34,8 @@ class Product extends Model
     {
         return $this->BelongsTo(Purchase::class, 'PURCHASE_ID', 'PURCHASE_ID');
     }
-
-    public function stock(): HasOne
+    public function stocks(): BelongsTo
     {
-        return $this->hasOne(Supplier::class, 'STOCK_ID', 'STOCK_ID');
+        return $this->BelongsTo(Stock::class, 'STOCK_ID', 'STOCK_ID');
     }
 }
