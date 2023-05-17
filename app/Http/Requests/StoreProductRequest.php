@@ -11,7 +11,7 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['sometimes', 'required'],
+            'description' => ['sometimes', 'required'],
+            'supplierId' => ['sometimes', 'required']
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->name && $this->description && $this->supplierId)
+            $this->merge([
+                'NAME' => $this->name,
+                'DESCRIPTION' => $this->description,
+                'SUPPLIER_ID' => $this->supplierId,
+            ]);
+
     }
 }
