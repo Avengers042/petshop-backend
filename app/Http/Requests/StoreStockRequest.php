@@ -11,7 +11,7 @@ class StoreStockRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreStockRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'productId' => ['sometimes', 'required'],
+            'amount' => ['sometimes', 'required'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->productId && $this->amount) $this -> merge([
+            'PRODUCT_ID' => $this->productId,
+            'AMOUNT' => $this->amount,
+        ]);
+
     }
 }
