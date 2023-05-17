@@ -29,10 +29,19 @@ class UpdateStockRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-        if ($this->productId && $this->amount) $this -> merge([
-            'PRODUCT_ID' => $this->productId,
-            'AMOUNT' => $this->amount,
-        ]);
+        if ($this->productId && $this->amount)
+            $this->merge([
+                'PRODUCT_ID' => $this->productId,
+                'AMOUNT' => $this->amount,
+            ]);
 
+    }
+
+    public function messages(): array
+    {
+        return [
+            'productId.required' => 'Produto inválido.',
+            'amount.required' => 'Quantidade inválida.',
+        ];
     }
 }
