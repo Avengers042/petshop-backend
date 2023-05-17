@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
+use InvalidArgumentException;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -22,9 +24,9 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'required'],
-            'description' => ['sometimes', 'required'],
-            'supplierId' => ['sometimes', 'required']
+            'name' => ['required'],
+            'description' => ['required' => "nome inválido"],
+            'supplierId' => ['required']
         ];
     }
 
@@ -39,12 +41,13 @@ class UpdateProductRequest extends FormRequest
 
     }
 
+
     public function messages(): array
     {
         return [
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
-            'supplierId.required' => 'ID inválido.',
+            'supplierId.required' => 'Fornecedor inválido.',
             'supplierId.exists' => 'Fornecedor inválido.',
         ];
     }
