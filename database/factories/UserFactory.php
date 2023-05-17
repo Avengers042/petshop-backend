@@ -19,7 +19,6 @@ class UserFactory extends Factory
      */
     public function definition() : array
     {
-
         return [
             'FIRST_NAME' => $this->faker->firstName(),
             'LAST_NAME' => $this->faker->lastName(),
@@ -27,6 +26,7 @@ class UserFactory extends Factory
             'EMAIL' => $this->faker->safeEmail(),
             'AGE' => $this->faker->numberBetween(18, 100),
             'PASSWORD' => $this->faker->password(),
+            'PASSWORD' => Hash::make($this->faker->password()),
             'ADDRESS_ID' => Address::factory()
         ];
     }
