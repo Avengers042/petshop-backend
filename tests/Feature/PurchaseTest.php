@@ -101,7 +101,7 @@ class PurchaseTest extends TestCase
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $purchase);
         $responseInvalid = $this->put("$this->baseURL/1", ['productId' => 1]);
         $responseNull = $this->put("$this->baseURL/1");
-        $responseNotFoundProduct = $this->put("$this->baseURL/1", $purchaseInvalid);
+        $responseNotFoundProduct = $this->put("$this->baseURL/100", $purchaseInvalid);
 
         $responseValid
             ->assertOk()
@@ -118,7 +118,7 @@ class PurchaseTest extends TestCase
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertServiceUnavailable();
+        $responseNotFoundProduct->assertNotFound();
     }
 
     /**

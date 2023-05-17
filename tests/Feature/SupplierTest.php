@@ -89,9 +89,7 @@ class SupplierTest extends TestCase
         $responseValid = $this->withHeaders($this->headers)->post("$this->baseURL", $supplier);
         $responseInvalid = $this->post("$this->baseURL", $supplierInvalid);
         $responseNull = $this->post("$this->baseURL");
-        /*         
-                
-                $responseNotFoundProduct = $this->post("$this->baseURL", $supplierNotFound); */
+        $responseNotFoundProduct = $this->post("$this->baseURL", $supplierNotFound);
 
         $responseValid
             ->assertCreated()
@@ -120,11 +118,9 @@ class SupplierTest extends TestCase
                     )
             );
 
-            $responseInvalid->assertUnprocessable();
-            $responseNull->assertUnprocessable();
-        /*         
-                
-                $responseNotFoundProduct->assertServiceUnavailable(); */
+        $responseInvalid->assertUnprocessable();
+        $responseNull->assertUnprocessable();
+        $responseNotFoundProduct->assertUnprocessable();
     }
 
     /**
@@ -161,9 +157,8 @@ class SupplierTest extends TestCase
 
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $supplier);
         $responseInvalid = $this->put("$this->baseURL/1", $supplierInvalid);
-        /*         $responseInvalid = $this->put("$this->baseURL/1", $supplierInvalid);
-                $responseNull = $this->put("$this->baseURL/1");
-                $responseNotFoundProduct = $this->put("$this->baseURL/100", $supplierNotFound); */
+        $responseNull = $this->put("$this->baseURL/1");
+        $responseNotFoundProduct = $this->put("$this->baseURL/100", $supplierNotFound);
 
         $responseValid
             ->assertOk()
@@ -192,10 +187,9 @@ class SupplierTest extends TestCase
                     )
             );
 
-            $responseInvalid->assertUnprocessable();
-        /* 
-                $responseNull->assertUnprocessable();
-                $responseNotFoundProduct->assertServiceUnavailable(); */
+        $responseInvalid->assertUnprocessable();
+        $responseNull->assertUnprocessable();
+        $responseNotFoundProduct->assertNotFound();
     }
 
     /**
