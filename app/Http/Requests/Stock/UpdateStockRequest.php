@@ -9,7 +9,7 @@ class UpdateStockRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,25 +19,27 @@ class UpdateStockRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
+        $method = $this->getMethod();
+        $sometimes = $method == 'PATCH' ? 'sometimes' : null;
+
         return [
-            'productId' => ['sometimes', 'required'],
-            'amount' => ['sometimes', 'required'],
+            'productId' => [$sometimes, 'required'],
+            'amount' => [$sometimes, 'required'],
         ];
     }
 
     protected function prepareForValidation()
     {
-        if ($this->productId && $this->amount)
-            $this->merge([
-                'PRODUCT_ID' => $this->productId,
-                'AMOUNT' => $this->amount,
-            ]);
+        if ($this->productId)
+            $this->merge(['PRODUCT_ID' => $this->productId]);
 
+        if ($this->amount)
+            $this->merge(['AMOUNT' => $this->amount]);
     }
 
-    public function messages(): array
+    public function messages() : array
     {
         return [
             'productId.required' => 'Produto inválido.',

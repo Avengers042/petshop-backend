@@ -22,17 +22,18 @@ class StoreStockRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'productId' => ['sometimes', 'required'],
-            'amount' => ['sometimes', 'required'],
+            'productId' => ['required'],
+            'amount' => ['required'],
         ];
     }
 
     protected function prepareForValidation()
     {
-        if ($this->productId && $this->amount) $this->merge([
-            'PRODUCT_ID' => $this->productId,
-            'AMOUNT' => $this->amount,
-        ]);
+        if ($this->productId && $this->amount)
+            $this->merge([
+                'PRODUCT_ID' => $this->productId,
+                'AMOUNT' => $this->amount,
+            ]);
     }
 
     public function messages(): array

@@ -2,6 +2,7 @@
 
 namespace tests\Feature;
 
+use Database\Seeders\ProductSeeder;
 use Database\Seeders\StockSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -11,7 +12,7 @@ class StockTest extends TestCase
 {
     use RefreshDatabase;
     protected $baseURL = '/api/stocks';
-    protected $seeder = StockSeeder::class;
+    protected $seeder = [StockSeeder::class, ProductSeeder::class];
     protected $headers = ['Accept' => 'application/json'];
 
     /**
@@ -118,7 +119,7 @@ class StockTest extends TestCase
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertServiceUnavailable();
+        $responseNotFoundProduct->assertNotFound();
     }
 
     /**
