@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        return new ProductResource(tap($product)->update($request->all()));
     }
 
     /**
@@ -47,6 +47,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        $product->delete();
+        return new ProductResource(tap($product)->delete());
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Stock;
 use App\Http\Requests\Stock\UpdateStockRequest;
 use App\Http\Requests\Stock\StoreStockRequest;
@@ -40,7 +39,7 @@ class StockController extends Controller
      */
     public function update(UpdateStockRequest $request, Stock $stock)
     {
-        $stock->update($request->all());
+        return new StockResource(tap($stock)->update($request->all()));
     }
 
     /**
@@ -48,6 +47,6 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock)
     {
-        $stock->delete();
+        return new StockResource(tap($stock)->delete());
     }
 }
