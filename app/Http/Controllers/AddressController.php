@@ -15,7 +15,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return new AddressCollection(Address::all());
+        return response()->json(new AddressCollection(Address::all()));
     }
 
     /**
@@ -23,7 +23,7 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        return new AddressResource(Address::create($request->all()));
+        return response()->json(new AddressResource(Address::create($request->all())));
     }
 
     /**
@@ -31,7 +31,7 @@ class AddressController extends Controller
      */
     public function show(Address $address)
     {
-        return new AddressResource($address);
+        return response()->json(new AddressResource($address));
     }
 
     /**
@@ -39,7 +39,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address)
     {
-        return new AddressResource(tap($address)->update($request->all()));
+        return response()->json(new AddressResource(tap($address)->update($request->all())));
     }
 
     /**
@@ -47,6 +47,6 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        return new AddressResource(tap($address)->delete());
+        return response()->json(new AddressResource(tap($address)->delete()));
     }
 }
