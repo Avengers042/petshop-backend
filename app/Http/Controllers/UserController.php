@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return new UserCollection(User::all());
+        return response()->json(new UserCollection(User::all()));
     }
 
     /**
@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        return new UserResource(User::create($request->all()));
+        return response()->json(new UserResource(User::create($request->all())));
     }
 
     /**
@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return new UserResource($user);
+        return response()->json(new UserResource($user));
     }
 
     /**
@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return new UserResource(tap($user)->update($request->all()));
+        return response()->json(new UserResource(tap($user)->update($request->all())));
     }
 
 
@@ -49,6 +49,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return new UserResource(tap($user)->delete());
+        return response()->json(new UserResource(tap($user)->delete()));
     }
 }
