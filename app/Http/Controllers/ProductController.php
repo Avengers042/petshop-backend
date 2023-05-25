@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return new ProductCollection(Product::all());
+        return response()->json(new ProductCollection(Product::all()));
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        return new ProductResource(Product::create($request->all()));
+        return response()->json(new ProductResource(Product::create($request->all())));
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return new ProductResource($product);
+        return response()->json(new ProductResource($product));
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        return new ProductResource(tap($product)->update($request->all()));
+        return response()->json(new ProductResource(tap($product)->update($request->all())));
     }
 
     /**
@@ -47,6 +47,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        return new ProductResource(tap($product)->delete());
+        return response()->json(new ProductResource(tap($product)->delete()));
     }
 }
