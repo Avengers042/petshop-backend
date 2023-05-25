@@ -15,7 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return new SupplierCollection(Supplier::all());
+        return response()->json(new SupplierCollection(Supplier::all()));
     }
 
     /**
@@ -23,7 +23,7 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        return new SupplierResource(Supplier::create($request->all()));
+        return response()->json(new SupplierResource(Supplier::create($request->all())));
     }
 
     /**
@@ -31,7 +31,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        return new SupplierResource($supplier);
+        return response()->json(new SupplierResource($supplier));
     }
 
     /**
@@ -39,7 +39,7 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        return new SupplierResource(tap($supplier)->update($request->all()));
+        return response()->json(new SupplierResource(tap($supplier)->update($request->all())));
     }
 
     /**
@@ -47,6 +47,6 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        return new SupplierResource(tap($supplier)->delete());
+        return response()->json(new SupplierResource(tap($supplier)->delete()));
     }
 }
