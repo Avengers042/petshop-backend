@@ -15,7 +15,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        return new PurchaseCollection(Purchase::all());
+        return response()->json(new PurchaseCollection(Purchase::all()));
     }
 
     /**
@@ -23,7 +23,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        return new PurchaseResource(Purchase::create($request->all()));
+        return response()->json(new PurchaseResource(Purchase::create($request->all())));
     }
 
     /**
@@ -31,7 +31,7 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        return new PurchaseResource($purchase);
+        return response()->json(new PurchaseResource($purchase));
     }
 
     /**
@@ -39,7 +39,7 @@ class PurchaseController extends Controller
      */
     public function update(UpdatePurchaseRequest $request, Purchase $purchase)
     {
-        return new PurchaseResource(tap($purchase)->update($request->all()));
+        return response()->json(new PurchaseResource(tap($purchase)->update($request->all())));
     }
 
     /**
@@ -47,6 +47,6 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
-        return new PurchaseResource(tap($purchase)->delete());
+        return response()->json(new PurchaseResource(tap($purchase)->delete()));
     }
 }
