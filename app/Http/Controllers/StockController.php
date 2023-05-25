@@ -15,7 +15,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        return new StockCollection(Stock::all());
+        return response()->json(new StockCollection(Stock::all()));
     }
 
     /**
@@ -23,7 +23,7 @@ class StockController extends Controller
      */
     public function store(StoreStockRequest $request)
     {
-        return new StockResource(Stock::create($request->all()));
+        return response()->json(new StockResource(Stock::create($request->all())));
     }
 
     /**
@@ -31,7 +31,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        return new StockResource($stock);
+        return response()->json(new StockResource($stock));
     }
 
     /**
@@ -39,7 +39,7 @@ class StockController extends Controller
      */
     public function update(UpdateStockRequest $request, Stock $stock)
     {
-        return new StockResource(tap($stock)->update($request->all()));
+        return response()->json(new StockResource(tap($stock)->update($request->all())));
     }
 
     /**
@@ -47,6 +47,6 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock)
     {
-        return new StockResource(tap($stock)->delete());
+        return response()->json(new StockResource(tap($stock)->delete()));
     }
 }
