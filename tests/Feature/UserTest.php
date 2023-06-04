@@ -20,7 +20,7 @@ class UserTest extends TestCase
     public function testGetAllUsers() : void
     {
         $response = $this->withHeaders($this->headers)->get("$this->baseURL");
-        $response->assertStatus(200)->assertJsonCount(25, 'data');
+        $response->assertStatus(200)->assertJsonCount(25);
     }
 
     /**
@@ -35,12 +35,9 @@ class UserTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
-                            ->where('userId', 1)
-                    ));
+                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
+                    ->where('userId', 1)
+            );
 
         $responseInvalid->assertNotFound();
     }
@@ -79,12 +76,8 @@ class UserTest extends TestCase
             ->assertCreated()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
-                            ->where('addressId', 1)
-                    )
+                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
+                    ->where('addressId', 1)
             );
 
         $responseInvalid->assertUnprocessable();
@@ -126,12 +119,8 @@ class UserTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
-                            ->where('addressId', 2)
-                    )
+                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
+                    ->where('addressId', 2)
             );
 
         $responseInvalid->assertUnprocessable();
@@ -141,6 +130,7 @@ class UserTest extends TestCase
 
     /**
      * Check if the route /users can delete a user
+     * 
      * @doesNotPerformAssertions
      */
     public function testDeleteUser() : void

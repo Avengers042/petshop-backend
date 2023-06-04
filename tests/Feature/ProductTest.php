@@ -2,6 +2,7 @@
 
 namespace tests\Feature\ProductTest;
 
+use App\Models\Stock;
 use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -17,32 +18,26 @@ class ProductTest extends TestCase
     /**
      * Check if the route /purchases return all 25 purchases registers
      */
-    public function testGetAllProducts(): void
+    public function testGetAllProducts() : void
     {
         $response = $this->withHeaders($this->headers)->get("$this->baseURL");
-        $response->assertStatus(200)->assertJsonCount(25, 'data');
+        $response->assertStatus(200)->assertJsonCount(25);
     }
 
     /**
      * Check if the route /purchases return one value
      */
-    public function testGetOneProduct(): void
+    public function testGetOneProduct() : void
     {
         $responseValid = $this->withHeaders($this->headers)->get("$this->baseURL/1");
         $responseInvalid = $this->withHeaders($this->headers)->get("$this->baseURL/100");
 
         $responseValid
             ->assertOk()
-            ->assertJson(fn(AssertableJson $json) =>
+            ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has(
-                        'data',
-                        fn(AssertableJson $json) =>
-                        $json
-                            ->hasAll('productId', 'name', 'description', 'supplierId')
-                            ->where('productId', 1)
-                    )
+                ->hasAll('productId', 'name', 'description', 'supplierId')
+                ->where('productId', 1)
             );
 
         $responseInvalid->assertNotFound();
@@ -51,8 +46,10 @@ class ProductTest extends TestCase
     /**
      * Check if the route /purchases can create a purchase
      */
-    public function testCreateProduct(): void
+    public function testCreateProduct() : void
     {
+        Stock::factory()->create();
+
         $product = [
             'name' => "test",
             'description' => "testdesc",
@@ -72,27 +69,21 @@ class ProductTest extends TestCase
 
         $responseValid = $this->withHeaders($this->headers)->post("$this->baseURL", $product);
         $responseInvalid = $this->post("$this->baseURL", $productInvalid);
-        
+
         $responseNull = $this->post("$this->baseURL");
         $responseNotFoundProduct = $this->post("$this->baseURL", $productNotFound);
 
         $responseValid
             ->assertCreated()
             ->assertJson(
-                fn(AssertableJson $json) =>
+                fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has(
-                        'data',
-                        fn(AssertableJson $json) =>
-                        $json
-                            ->hasAll('productId', 'name', 'description', 'supplierId')
-                            ->whereAll([
-                                'name' => 'test',
-                                'description' => 'testdesc',
-                                'supplierId' => 1,
-                            ])
-                    )
+                    ->hasAll('productId', 'name', 'description', 'supplierId')
+                    ->whereAll([
+                        'name' => 'test',
+                        'description' => 'testdesc',
+                        'supplierId' => 1,
+                    ])
             );
 
         $responseInvalid->assertUnprocessable();
@@ -103,7 +94,7 @@ class ProductTest extends TestCase
     /**
      * Check if the route /purchases can update a purchase
      */
-    public function testUpdateProduct(): void
+    public function testUpdateProduct() : void
     {
         $product = [
             'name' => "test",
@@ -125,17 +116,11 @@ class ProductTest extends TestCase
         $responseValid
             ->assertOk()
             ->assertJson(
-                fn(AssertableJson $json) =>
+                fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has(
-                        'data',
-                        fn(AssertableJson $json) =>
-                        $json
-                            ->hasAll('productId', 'name', 'description', 'supplierId')
-                            ->where('productId', 1)
-                            ->where('supplierId', 1)
-                    )
+                    ->hasAll('productId', 'name', 'description', 'supplierId')
+                    ->where('productId', 1)
+                    ->where('supplierId', 1)
             );
 
         $responseInvalid->assertUnprocessable();
@@ -146,7 +131,7 @@ class ProductTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testDeleteProduct(): void
+    public function testDeleteProduct() : void
     {
         //todo
     }

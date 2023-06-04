@@ -20,7 +20,7 @@ class PurchaseTest extends TestCase
     public function testGetAllPurchases() : void
     {
         $response = $this->withHeaders($this->headers)->get("$this->baseURL");
-        $response->assertStatus(200)->assertJsonCount(25, 'data');
+        $response->assertStatus(200)->assertJsonCount(25);
     }
 
     /**
@@ -35,12 +35,8 @@ class PurchaseTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('purchaseId', 'productId', 'userId')
-                            ->where('purchaseId', 1)
-                    ));
+                    ->hasAll('purchaseId', 'productId', 'userId')
+                    ->where('purchaseId', 1));
 
         $responseInvalid->assertNotFound();
     }
@@ -69,13 +65,9 @@ class PurchaseTest extends TestCase
             ->assertCreated()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('purchaseId', 'productId', 'userId')
-                            ->where('productId', 1)
-                            ->where('userId', 1)
-                    )
+                    ->hasAll('purchaseId', 'productId', 'userId')
+                    ->where('productId', 1)
+                    ->where('userId', 1)
             );
 
         $responseInvalid->assertUnprocessable();
@@ -107,13 +99,9 @@ class PurchaseTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('purchaseId', 'productId', 'userId')
-                            ->where('productId', 2)
-                            ->where('userId', 2)
-                    )
+                    ->hasAll('purchaseId', 'productId', 'userId')
+                    ->where('productId', 2)
+                    ->where('userId', 2)
             );
 
         $responseInvalid->assertUnprocessable();

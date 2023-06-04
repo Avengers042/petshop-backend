@@ -21,7 +21,7 @@ class SupplierTest extends TestCase
     {
         $response = $this->withHeaders($this->headers)->get("$this->baseURL");
 
-        $response->assertStatus(200)->assertJsonCount(25, 'data');
+        $response->assertStatus(200)->assertJsonCount(25);
     }
 
     /**
@@ -36,20 +36,17 @@ class SupplierTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll(
-                                'supplierId',
-                                'corporateName',
-                                'tradeName',
-                                'cnpj',
-                                'email',
-                                'commercialPhone',
-                                'addressId'
-                            )
-                            ->where('supplierId', 1)
-                    ));
+                    ->hasAll(
+                        'supplierId',
+                        'corporateName',
+                        'tradeName',
+                        'cnpj',
+                        'email',
+                        'commercialPhone',
+                        'addressId'
+                    )
+                    ->where('supplierId', 1)
+            );
 
         $responseInvalid->assertNotFound();
     }
@@ -95,27 +92,23 @@ class SupplierTest extends TestCase
             ->assertCreated()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll(
-                                'supplierId',
-                                'corporateName',
-                                'tradeName',
-                                'cnpj',
-                                'email',
-                                'commercialPhone',
-                                'addressId'
-                            )
-                            ->whereAll([
-                                'corporateName' => 'Empresa LTDA',
-                                'tradeName' => 'Empresa',
-                                'cnpj' => '30168490000109',
-                                'email' => 'teste@teste.com',
-                                'commercialPhone' => 950618943,
-                                'addressId' => 1
-                            ])
+                    ->hasAll(
+                        'supplierId',
+                        'corporateName',
+                        'tradeName',
+                        'cnpj',
+                        'email',
+                        'commercialPhone',
+                        'addressId'
                     )
+                    ->whereAll([
+                        'corporateName' => 'Empresa LTDA',
+                        'tradeName' => 'Empresa',
+                        'cnpj' => '30168490000109',
+                        'email' => 'teste@teste.com',
+                        'commercialPhone' => 950618943,
+                        'addressId' => 1
+                    ])
             );
 
         $responseInvalid->assertUnprocessable();
@@ -164,27 +157,23 @@ class SupplierTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll(
-                                'supplierId',
-                                'corporateName',
-                                'tradeName',
-                                'cnpj',
-                                'email',
-                                'commercialPhone',
-                                'addressId'
-                            )
-                            ->whereAll([
-                                'corporateName' => 'Empresa LTDA',
-                                'tradeName' => 'Empresa',
-                                'cnpj' => '30168490000109',
-                                'email' => 'teste@email.com',
-                                'commercialPhone' => 950618943,
-                                'addressId' => 1
-                            ])
+                    ->hasAll(
+                        'supplierId',
+                        'corporateName',
+                        'tradeName',
+                        'cnpj',
+                        'email',
+                        'commercialPhone',
+                        'addressId'
                     )
+                    ->whereAll([
+                        'corporateName' => 'Empresa LTDA',
+                        'tradeName' => 'Empresa',
+                        'cnpj' => '30168490000109',
+                        'email' => 'teste@email.com',
+                        'commercialPhone' => 950618943,
+                        'addressId' => 1
+                    ])
             );
 
         $responseInvalid->assertUnprocessable();
@@ -194,6 +183,8 @@ class SupplierTest extends TestCase
 
     /**
      * Check if the route /suppliers can delete a supplier
+     * 
+     * @doesNotPerformAssertions
      */
     public function testDeleteSupplier() : void
     {
