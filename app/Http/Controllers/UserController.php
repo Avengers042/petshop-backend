@@ -24,7 +24,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        return response()->json(new UserResource(User::create($request->all())));
+        return response()->json(new UserResource(User::create($request->all())))->setStatusCode(201);
     }
 
     /**

@@ -23,7 +23,7 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        return response()->json(new AddressResource(Address::create($request->all())));
+        return response()->json(new AddressResource(Address::create($request->all())))->setStatusCode(201);
     }
 
     /**

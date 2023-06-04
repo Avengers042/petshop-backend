@@ -23,7 +23,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        return response()->json(new PurchaseResource(Purchase::create($request->all())));
+        return response()->json(new PurchaseResource(Purchase::create($request->all())))->setStatusCode(201);
     }
 
     /**

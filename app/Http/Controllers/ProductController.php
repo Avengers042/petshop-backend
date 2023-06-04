@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        return response()->json(new ProductResource(Product::create($request->all())));
+        return response()->json(new ProductResource(Product::create($request->all())))->setStatusCode(201);
     }
 
     /**

@@ -23,7 +23,7 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        return response()->json(new SupplierResource(Supplier::create($request->all())));
+        return response()->json(new SupplierResource(Supplier::create($request->all())))->setStatusCode(201);
     }
 
     /**

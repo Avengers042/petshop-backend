@@ -7,6 +7,7 @@ use App\Http\Requests\Stock\UpdateStockRequest;
 use App\Http\Requests\Stock\StoreStockRequest;
 use App\Http\Resources\Stock\StockResource;
 use App\Http\Resources\Stock\StockCollection;
+use Illuminate\Support\Facades\Log;
 
 class StockController extends Controller
 {
@@ -23,7 +24,8 @@ class StockController extends Controller
      */
     public function store(StoreStockRequest $request)
     {
-        return response()->json(new StockResource(Stock::create($request->all())));
+        Log::info($request);
+        return response()->json(new StockResource(Stock::create($request->all())))->setStatusCode(201);
     }
 
     /**
