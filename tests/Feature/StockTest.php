@@ -2,7 +2,7 @@
 
 namespace tests\Feature;
 
-use Database\Seeders\ProductSeeder;
+use App\Models\Product;
 use Database\Seeders\StockSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -12,20 +12,20 @@ class StockTest extends TestCase
 {
     use RefreshDatabase;
     protected $baseURL = '/api/stocks';
-    protected $seeder = [StockSeeder::class, ProductSeeder::class];
+    protected $seeder = StockSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
 
     /**
-     * Check if the route /purchases return all 25 purchases registers
+     * Check if the route /stocks return all 25 stocks registers
      */
     public function testGetAllStocks() : void
     {
         $response = $this->withHeaders($this->headers)->get("$this->baseURL");
-        $response->assertStatus(200)->assertJsonCount(25, 'data');
+        $response->assertStatus(200)->assertJsonCount(25);
     }
 
     /**
-     * Check if the route /purchases return one value
+     * Check if the route /stocks return one value
      */
     public function testGetOneStock() : void
     {
@@ -36,21 +36,19 @@ class StockTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('productId', 'amount')
-                            ->where('productId', 1)
-                    ));
+                    ->hasAll('productId', 'amount')
+                    ->where('productId', 1));
 
         $responseInvalid->assertNotFound();
     }
 
     /**
-     * Check if the route /purchases can create a purchase
+     * Check if the route /stocks can create a stock
      */
     public function testCreateStock() : void
     {
+        Product::factory()->create();
+        
         $stock = [
             'productId' => 1,
             'amount' => 55
@@ -70,13 +68,9 @@ class StockTest extends TestCase
             ->assertCreated()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('productId', 'amount')
-                            ->where('productId', 1)
-                            ->where('amount', 5)
-                    )
+                    ->hasAll('productId', 'amount')
+                    ->where('productId', 1)
+                    ->where('amount', 55)
             );
 
         $responseInvalid->assertUnprocessable();
@@ -85,7 +79,7 @@ class StockTest extends TestCase
     }
 
     /**
-     * Check if the route /purchases can update a purchase
+     * Check if the route /stocks can update a stock
      */
     public function testUpdateStock() : void
     {
@@ -108,13 +102,9 @@ class StockTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->has('data')
-                    ->has('data', fn (AssertableJson $json) =>
-                        $json
-                            ->hasAll('productId', 'amount')
-                            ->where('productId', 1)
-                            ->where('amount', 5)
-                    )
+                    ->hasAll('productId', 'amount')
+                    ->where('productId', 1)
+                    ->where('amount', 5)
             );
 
         $responseInvalid->assertUnprocessable();
@@ -125,7 +115,7 @@ class StockTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testDeleteStock(): void
+    public function testDeleteStock() : void
     {
         //todo
     }
