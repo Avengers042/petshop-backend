@@ -3,13 +3,13 @@
 namespace Tests\Feature;
 
 use Database\Seeders\PurchaseSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class PurchaseTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
     protected $baseURL = '/api/purchases';
     protected $seeder = PurchaseSeeder::class;
     protected $headers = ['Accept' => 'application/json'];

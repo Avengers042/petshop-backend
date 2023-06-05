@@ -2,15 +2,14 @@
 
 namespace tests\Feature\ProductTest;
 
-use App\Models\Stock;
 use Database\Seeders\ProductSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
     protected $baseURL = '/api/products';
     protected $seeder = ProductSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
@@ -48,8 +47,6 @@ class ProductTest extends TestCase
      */
     public function testCreateProduct() : void
     {
-        Stock::factory()->create();
-
         $product = [
             'name' => "test",
             'description' => "testdesc",
