@@ -27,7 +27,8 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => [$sometimes, 'required'],
             'description' => [$sometimes, 'required'],
-            'supplierId' => [$sometimes, 'required']
+            'supplierId' => [$sometimes, 'required'],
+            'imageId' => [$sometimes, 'required']
         ];
     }
 
@@ -41,6 +42,9 @@ class UpdateProductRequest extends FormRequest
 
         if ($this->supplierId)
             $this->merge(['SUPPLIER_ID' => $this->supplierId]);
+
+        if ($this->imageId)
+            $this->merge(['IMAGE_ID' => $this->imageId,]);
     }
 
     /**
@@ -53,7 +57,8 @@ class UpdateProductRequest extends FormRequest
         $messages = array(
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
-            'supplierId.required' => 'Fornecedor inválido.'
+            'supplierId.required' => 'Fornecedor inválido.',
+            'imageId.required' => 'Imagem inválida.'
         );
 
         return $messages;

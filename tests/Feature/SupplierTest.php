@@ -76,9 +76,9 @@ class SupplierTest extends TestCase
 
         $supplierNotFound = [
             'corporateName' => 'Empresa LTDA',
-            'tradeName' => 'Empresa',
-            'cnpj' => '30168490000109',
-            'email' => 'teste@teste.com',
+            'tradeName' => 'Empresa A',
+            'cnpj' => '30168490000129',
+            'email' => 'testing@teste.com',
             'commercialPhone' => 950618943,
             'addressId' => 100
         ];
@@ -139,19 +139,10 @@ class SupplierTest extends TestCase
             'addressId' => 1
         ];
 
-        $supplierNotFound = [
-            'corporateName' => 'Empresa LTDA',
-            'tradeName' => 'Empresa',
-            'cnpj' => '30168490000109',
-            'email' => 'teste@testing.com',
-            'commercialPhone' => 950618943,
-            'addressId' => 100
-        ];
-
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $supplier);
         $responseInvalid = $this->put("$this->baseURL/1", $supplierInvalid);
         $responseNull = $this->put("$this->baseURL/1");
-        $responseNotFoundProduct = $this->put("$this->baseURL/100", $supplierNotFound);
+        $responseNotFoundProduct = $this->put("$this->baseURL/100", $supplier);
 
         $responseValid
             ->assertOk()

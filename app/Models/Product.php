@@ -22,7 +22,8 @@ class Product extends Model
     protected $fillable = [
         'NAME',
         'DESCRIPTION',
-        'SUPPLIER_ID'
+        'SUPPLIER_ID',
+        'IMAGE_ID'
     ];
 
     public function supplier(): BelongsTo
@@ -37,5 +38,10 @@ class Product extends Model
     public function stocks(): BelongsTo
     {
         return $this->belongsTo(Stock::class, 'PRODUCT_ID');
+    }
+
+    public function image(): HasOne
+    {
+        return $this->hasOne(Image::class, 'IMAGE_ID', 'IMAGE_ID');
     }
 }

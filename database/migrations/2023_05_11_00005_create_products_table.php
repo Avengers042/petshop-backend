@@ -15,7 +15,9 @@ return new class extends Migration {
             $table->string('NAME', 25);
             $table->text('DESCRIPTION');
             $table->unsignedBigInteger('SUPPLIER_ID');
+            $table->unsignedBigInteger('IMAGE_ID');
             $table->foreign('SUPPLIER_ID')->references('SUPPLIER_ID')->on('suppliers');
+            $table->foreign('IMAGE_ID')->references('IMAGE_ID')->on('images');
             $table->index('PRODUCT_ID');
         });
     }

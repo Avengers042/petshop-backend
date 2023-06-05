@@ -9,7 +9,7 @@ class StoreProductRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -19,24 +19,24 @@ class StoreProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
             'name' => ['required'],
             'description' => ['required'],
-            'supplierId' => ['required']
+            'supplierId' => ['required'],
+            'imageId' => ['required']
         ];
     }
 
     protected function prepareForValidation()
     {
-        if ($this->name && $this->description && $this->supplierId)
-            $this->merge([
-                'NAME' => $this->name,
-                'DESCRIPTION' => $this->description,
-                'SUPPLIER_ID' => $this->supplierId,
-            ]);
-
+        $this->merge([
+            'NAME' => $this->name,
+            'DESCRIPTION' => $this->description,
+            'SUPPLIER_ID' => $this->supplierId,
+            'IMAGE_ID' => $this->imageId,
+        ]);
     }
 
     /**
@@ -49,7 +49,8 @@ class StoreProductRequest extends FormRequest
         $messages = array(
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
-            'supplierId.required' => 'Fornecedor inválido.'
+            'supplierId.required' => 'Fornecedor inválido.',
+            'imageId.required' => 'Imagem inválida.'
         );
 
         return $messages;
