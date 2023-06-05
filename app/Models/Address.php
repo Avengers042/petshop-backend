@@ -28,10 +28,10 @@ class Address extends Model {
     ];
 
     public function users(): BelongsToMany {
-        return $this->BelongsToMany(User::class, 'USER_ID', 'USER_ID');
+        return $this->belongsToMany(User::class, 'USER_ID');
     }
 
     public function supplier(): BelongsTo {
-        return $this->BelongsTo(Supplier::class, 'SUPPLIER_ID', 'SUPPLIER_ID');
+        return $this->belongsTo(Supplier::class, 'SUPPLIER_ID');
     }
 }

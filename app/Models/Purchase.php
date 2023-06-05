@@ -26,11 +26,11 @@ class Purchase extends Model
 
     public function products(): HasMany
     {
-        return $this->HasMany(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
+        return $this->hasMany(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
     }
 
     public function user(): BelongsTo
     {
-        return $this->BelongsTo(User::class, 'USER_ID', 'USER_ID');
+        return $this->belongsTo(User::class, 'USER_ID', 'USER_ID');
     }
 }

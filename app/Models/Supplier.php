@@ -30,11 +30,11 @@ class Supplier extends Model
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
+        return $this->hasMany(Product::class, 'PRODUCT_ID');
     }
 
     public function address(): HasOne
     {
-        return $this->HasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
+        return $this->hasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
     }
 }

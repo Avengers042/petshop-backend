@@ -39,10 +39,10 @@ class User extends Model {
     ];
 
     public function purchases(): HasMany {
-        return $this->hasMany(Purchase::class, 'PURCHASE_ID', 'PURCHASE_ID');
+        return $this->hasMany(Purchase::class, 'PURCHASE_ID');
     }
 
     public function address(): HasOne {
-        return $this->HasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
+        return $this->hasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
     }
 }

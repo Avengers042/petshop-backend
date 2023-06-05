@@ -32,10 +32,10 @@ class Product extends Model
 
     public function purchase(): BelongsTo
     {
-        return $this->BelongsTo(Purchase::class, 'PURCHASE_ID', 'PURCHASE_ID');
+        return $this->belongsTo(Purchase::class, 'PURCHASE_ID');
     }
     public function stocks(): BelongsTo
     {
-        return $this->BelongsTo(Stock::class, 'STOCK_ID', 'STOCK_ID');
+        return $this->belongsTo(Stock::class, 'STOCK_ID');
     }
 }
