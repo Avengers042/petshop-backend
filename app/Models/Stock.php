@@ -12,7 +12,7 @@ class Stock extends Model
 
     protected $primaryKey = 'PRODUCT_ID';
     public $timestamps = false;
-
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -26,6 +26,6 @@ class Stock extends Model
 
     public function product(): HasOne
     {
-        return $this->HasOne(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
+        return $this->hasOne(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
     }
 }
