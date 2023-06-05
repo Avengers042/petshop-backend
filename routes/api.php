@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,5 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('users', UserController::class);
     Route::apiResource('stocks', StockController::class);
     Route::apiResource('products', ProductController::class);
+    Route::apiResource('images', ImageController::class);
 });
