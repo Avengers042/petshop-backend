@@ -4,13 +4,13 @@ namespace tests\Feature;
 
 use App\Models\Product;
 use Database\Seeders\StockSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class StockTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
     protected $baseURL = '/api/stocks';
     protected $seeder = StockSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
@@ -47,10 +47,11 @@ class StockTest extends TestCase
      */
     public function testCreateStock() : void
     {
-        Product::factory()->create();
-        
+        $product = Product::factory()->create();
+        $productId = $product->getAttribute('PRODUCT_ID');
+
         $stock = [
-            'productId' => 1,
+            'productId' => $productId,
             'amount' => 55
         ];
 
@@ -69,7 +70,7 @@ class StockTest extends TestCase
             ->assertJson(fn (AssertableJson $json) =>
                 $json
                     ->hasAll('productId', 'amount')
-                    ->where('productId', 1)
+                    ->where('productId', $productId)
                     ->where('amount', 55)
             );
 
