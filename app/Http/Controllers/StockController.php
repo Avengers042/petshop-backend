@@ -24,7 +24,6 @@ class StockController extends Controller
      */
     public function store(StoreStockRequest $request)
     {
-        Log::info($request);
         return response()->json(new StockResource(Stock::create($request->all())))->setStatusCode(201);
     }
 
