@@ -30,6 +30,9 @@ class UpdateStockRequest extends FormRequest
         ];
     }
 
+    /**
+     * Prepare the data for validation.
+     */
     protected function prepareForValidation()
     {
         if ($this->productId)
@@ -39,6 +42,11 @@ class UpdateStockRequest extends FormRequest
             $this->merge(['AMOUNT' => $this->amount]);
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
     public function messages() : array
     {
         return [
