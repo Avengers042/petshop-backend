@@ -76,9 +76,9 @@ class SupplierTest extends TestCase
 
         $supplierNotFound = [
             'corporateName' => 'Empresa LTDA',
-            'tradeName' => 'Empresa A',
-            'cnpj' => '30168490000129',
-            'email' => 'testing@teste.com',
+            'tradeName' => 'Empresa',
+            'cnpj' => '30168490000999',
+            'email' => 'testing@testing.com',
             'commercialPhone' => 950618943,
             'addressId' => 100
         ];
@@ -113,7 +113,7 @@ class SupplierTest extends TestCase
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertUnprocessable();
+        $responseNotFoundProduct->assertServiceUnavailable();
     }
 
     /**
