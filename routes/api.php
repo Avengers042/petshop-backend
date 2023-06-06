@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
@@ -28,4 +29,5 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('stocks', StockController::class);
     Route::apiResource('products', ProductController::class);
     Route::apiResource('images', ImageController::class);
+    Route::apiResource('categories', CategoryController::class);
 });
