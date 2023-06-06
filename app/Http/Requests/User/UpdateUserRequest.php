@@ -28,9 +28,14 @@ class UpdateUserRequest extends FormRequest
         return [
             'firstName' => [$sometimes, 'required'],
             'lastName' => [$sometimes, 'required'],
-            'cpf' => [$sometimes, 'required'],
-            'email' => [$sometimes, 'required'],
-            'age' => [$sometimes, 'required'],
+            'cpf' => [
+                'required',
+                'digits:11',
+                'unique:App\Models\User,cpf',
+                'numeric'
+            ],
+            'email' => ['required', 'email'],
+            'birthday' => [$sometimes, 'required'],
             'password' => [$sometimes, 'required'],
             'addressId' => [$sometimes, 'required']
         ];
@@ -53,8 +58,8 @@ class UpdateUserRequest extends FormRequest
         if ($this->email)
             $this->merge(['EMAIL' => $this->email]);
 
-        if ($this->age)
-            $this->merge(['AGE' => $this->age]);
+        if ($this->birthday)
+            $this->merge(['BIRTHDAY' => $this->birthday]);
 
         if ($this->password)
             $this->merge(['PASSWORD' => $this->password]);
@@ -73,9 +78,13 @@ class UpdateUserRequest extends FormRequest
         $messages = array(
             'firstName.required' => 'Nome inválido',
             'lastName.required' => 'Último nome inválido',
-            'cpf.required' => 'CPF inválido',
-            'email.required' => 'Email inválido',
-            'age.required' => 'Idade inválida',
+            'cpf.unique' => 'CPF já existente',
+            'cpf.required' => 'CPF inválido.',
+            'cpf.numeric' => 'O CPF deve conter só números',
+            'cpf.digits' => 'CPF deve ter somente 11 números',
+            'email.unique' => 'Email já existente',
+            'email.email' => 'Email inválido',
+            'birthday.required' => 'Data de nascimento inválida',
             'password.required' => 'Senha inválida',
             'addressId.required' => 'Endereço inválido'
         );

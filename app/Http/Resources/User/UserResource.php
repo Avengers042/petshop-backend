@@ -19,7 +19,7 @@ class UserResource extends JsonResource {
             'lastName' => $this->LAST_NAME,
             'cpf' => $this->CPF,
             'email' => $this->EMAIL,
-            'age' => $this->AGE,
+            'birthday' => $this->BIRTHDAY,
             'password' => Hash::make($this->PASSWORD),
             'addressId' => $this->ADDRESS_ID
         ];

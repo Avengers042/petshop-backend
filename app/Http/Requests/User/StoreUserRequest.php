@@ -22,13 +22,18 @@ class StoreUserRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'firstName' => ['required'],
-            'lastName' => ['sometimes', 'required'],
-            'cpf' => ['required'],
-            'email' => ['required'],
-            'age' => ['sometimes', 'required'],
+            'firstName' => ['required','string'],
+            'lastName' => ['required', 'string'],
+            'cpf' => [
+                'required',
+                'digits:11',
+                'unique:App\Models\User,cpf',
+                'numeric'
+            ],
+            'email' => ['required', 'email'],
+            'birthday' => ['required'],
             'password' => ['required'],
-            'addressId' => ['sometimes', 'required']
+            'addressId' => ['required']
         ];
     }
 
@@ -42,7 +47,7 @@ class StoreUserRequest extends FormRequest
             'LAST_NAME' => $this->lastName,
             'CPF' => $this->cpf,
             'EMAIL' => $this->email,
-            'AGE' => $this->age,
+            'BIRTHDAY' => $this->birthday,
             'PASSWORD' => $this->password,
             'ADDRESS_ID' => $this->addressId
         ]);
@@ -58,9 +63,13 @@ class StoreUserRequest extends FormRequest
         $messages = array(
             'firstName.required' => 'Nome inválido',
             'lastName.required' => 'Último nome inválido',
-            'cpf.required' => 'CPF inválido',
-            'email.required' => 'Email inválido',
-            'age.required' => 'Idade inválida',
+            'cpf.unique' => 'CPF já existente',
+            'cpf.required' => 'CPF inválido.',
+            'cpf.numeric' => 'O CPF deve conter só números',
+            'cpf.digits' => 'CPF deve ter somente 11 números',
+            'email.unique' => 'Email já existente',
+            'email.email' => 'Email inválido',
+            'birthday.required' => 'Data de nascimento inválida',
             'password.required' => 'Senha inválida',
             'addressId.required' => 'Endereço inválido'
         );

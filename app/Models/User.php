@@ -24,7 +24,7 @@ class User extends Model {
         'LAST_NAME',
         'CPF',
         'EMAIL',
-        'AGE',
+        'BIRTHDAY',
         'PASSWORD',
         'ADDRESS_ID'
     ];
