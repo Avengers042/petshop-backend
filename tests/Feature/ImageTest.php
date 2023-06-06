@@ -126,11 +126,13 @@ class ImageTest extends TestCase
 
     /**
      * Check if the route /images can delete a image
-     * 
-     * @doesNotPerformAssertions
      */
     public function testDeleteImage() : void
     {
-        // TO DO
+        $responseValid = $this->withHeaders($this->headers)->delete("$this->baseURL/1");
+        $responseNotFoundProduct = $this->delete("$this->baseURL/1");
+
+        $responseValid->assertOk();
+        $responseNotFoundProduct->assertNotFound();
     }
 }
