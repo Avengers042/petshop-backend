@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('LAST_NAME', 25);
             $table->char('CPF', 11)->unique();
             $table->string('EMAIL', 100)->unique();
-            $table->dateTime('BIRTHDAY');
+            $table->date('BIRTHDAY');
             $table->string('PASSWORD', 100);
             $table->unsignedBigInteger('ADDRESS_ID'); 
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');

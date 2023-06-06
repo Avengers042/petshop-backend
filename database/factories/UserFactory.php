@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'LAST_NAME' => $this->faker->lastName(),
             'CPF' => $this->faker->cpf(false),
             'EMAIL' => $this->faker->safeEmail(),
-            'BIRTHDAY' => $this->faker->dateTime(),
+            'BIRTHDAY' => $this->faker->date(),
             'PASSWORD' => Hash::make($this->faker->password()),
             'ADDRESS_ID' => Address::factory()
         ];

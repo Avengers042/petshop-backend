@@ -55,7 +55,7 @@ class UserTest extends TestCase
             'lastName' => $this->faker->lastName(),
             'cpf' => $this->faker->cpf(false),
             'email' => $this->faker->safeEmail(),
-            'birthday' => '2014-06-28 23:59:57',
+            'birthday' => '2014-06-28',
             'password' => 'password',
             'addressId' => 1
         ];
@@ -65,7 +65,7 @@ class UserTest extends TestCase
             'lastName' => $this->faker->lastName(),
             'cpf' => $this->faker->cpf(false),
             'email' => $this->faker->safeEmail(),
-            'birthday' => '2014-06-28 23:59:57',
+            'birthday' => '2014-06-28',
             'password' => 'password',
             'addressId' => 500,
         ];
@@ -115,7 +115,7 @@ class UserTest extends TestCase
             'lastName' => $this->faker->lastName(),
             'cpf' => $this->faker->cpf(false),
             'email' => $this->faker->safeEmail(),
-            'birthday' => '2014-06-28 23:59:57',
+            'birthday' => '2014-06-28',
             'password' => 'password2',
             'addressId' => 1
         ];
