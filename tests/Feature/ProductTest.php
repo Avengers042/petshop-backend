@@ -35,7 +35,7 @@ class ProductTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                ->hasAll('productId', 'name', 'description', 'supplierId', 'imageId')
+                ->hasAll('productId', 'name', 'description', 'supplierId', 'imageId', 'categoryId')
                 ->where('productId', 1)
             );
 
@@ -51,19 +51,23 @@ class ProductTest extends TestCase
             'name' => "test",
             'description' => "testdesc",
             'supplierId' => 1,
-            'imageId' => 1
+            'imageId' => 1,
+            'categoryId' => 1
         ];
 
         $productInvalid = [
             'description' => "",
             'supplierId' => 0,
+            'imageId' => 0,
+            'categoryId' => 0
         ];
 
         $productNotFound = [
             'name' => "test",
             'description' => "testdesc",
             'supplierId' => 100,
-            'imageId' => 100
+            'imageId' => 100,
+            'categoryId' => 100
         ];
 
         $responseValid = $this->withHeaders($this->headers)->post("$this->baseURL", $product);
@@ -77,12 +81,13 @@ class ProductTest extends TestCase
             ->assertJson(
                 fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('productId', 'name', 'description', 'supplierId', 'imageId')
+                    ->hasAll('productId', 'name', 'description', 'supplierId', 'imageId', 'categoryId')
                     ->whereAll([
                         'name' => 'test',
                         'description' => 'testdesc',
                         'supplierId' => 1,
-                        'imageId' => 1
+                        'imageId' => 1,
+                        'categoryId' => 1
                     ])
             );
 
@@ -100,14 +105,16 @@ class ProductTest extends TestCase
             'name' => "testing",
             'description' => "testing description",
             'supplierId' => 1,
-            'imageId' => 1
+            'imageId' => 1,
+            'categoryId' => 1
         ];
 
         $productInvalid = [
             'name' => "",
             'description' => "",
             'supplierId' => 0,
-            'imageId' => 0
+            'imageId' => 0,
+            'categoryId' => 0
         ];
 
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $product);
@@ -120,12 +127,13 @@ class ProductTest extends TestCase
             ->assertJson(
                 fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('productId', 'name', 'description', 'supplierId')
+                    ->hasAll('productId', 'name', 'description', 'supplierId', 'categoryId')
                     ->whereAll([
                         'name' => 'testing',
                         'description' => 'testing description',
                         'supplierId' => 1,
-                        'imageId' => 1
+                        'imageId' => 1,
+                        'categoryId' => 1
                     ])
             );
 
