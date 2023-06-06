@@ -4,12 +4,15 @@ namespace Tests\Feature;
 
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
     protected $baseURL = '/api/users';
     protected $seeder = UserSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
@@ -35,7 +38,7 @@ class UserTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
+                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'birthday', 'password', 'addressId')
                     ->where('userId', 1)
             );
 
@@ -48,41 +51,58 @@ class UserTest extends TestCase
     public function testCreateUser() : void
     {
         $user = [
-            'firstName' => 1,
-            'lastName' => 1,
-            'cpf' => 1,
-            'email' => 1,
-            'age' => 1,
-            'password' => 1,
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'cpf' => $this->faker->cpf(false),
+            'email' => $this->faker->safeEmail(),
+            'birthday' => '2014-06-28 23:59:57',
+            'password' => 'password',
             'addressId' => 1
         ];
 
-        $userInvalid = [
-            'firstName' => 100,
-            'lastName' => 100,
-            'cpf' => 100,
-            'email' => 100,
-            'age' => 100,
-            'password' => 100,
-            'addressId' => 100,
+        $userNotFoundAddres = [
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'cpf' => $this->faker->cpf(false),
+            'email' => $this->faker->safeEmail(),
+            'birthday' => '2014-06-28 23:59:57',
+            'password' => 'password',
+            'addressId' => 500,
         ];
 
         $responseValid = $this->withHeaders($this->headers)->post("$this->baseURL", $user);
         $responseInvalid = $this->post("$this->baseURL", ['addressId' => 1]);
         $responseNull = $this->post("$this->baseURL");
-        $responseNotFoundProduct = $this->post("$this->baseURL", $userInvalid);
+        $responseNotFoundAddress = $this->post("$this->baseURL", $userNotFoundAddres);
 
         $responseValid
             ->assertCreated()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
-                    ->where('addressId', 1)
+                    ->hasAll(
+                        'userId',
+                        'firstName',
+                        'lastName',
+                        'cpf',
+                        'email',
+                        'birthday',
+                        'password',
+                        'addressId'
+                    )
+                    ->whereAll([
+                        'firstName' => $user['firstName'],
+                        'lastName' => $user['lastName'],
+                        'cpf' => $user['cpf'],
+                        'email' => $user['email'],
+                        'birthday' => $user['birthday'],
+                        'password' => fn (string $password) => Hash::check('password', $password),
+                        'addressId' => 1
+                    ])
             );
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertServiceUnavailable();
+        $responseNotFoundAddress->assertServiceUnavailable();
     }
 
     /**
@@ -91,41 +111,49 @@ class UserTest extends TestCase
     public function testUpdateUser() : void
     {
         $user = [
-            'firstName' => 2,
-            'lastName' => 2,
-            'cpf' => 2,
-            'email' => 2,
-            'age' => 2,
-            'password' => 2,
-            'addressId' => 2
-        ];
-
-        $userInvalid = [
-            'firstName' => 100,
-            'lastName' => 100,
-            'cpf' => 100,
-            'email' => 100,
-            'age' => 100,
-            'password' => 100,
-            'addressId' => 100
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'cpf' => $this->faker->cpf(false),
+            'email' => $this->faker->safeEmail(),
+            'birthday' => '2014-06-28 23:59:57',
+            'password' => 'password2',
+            'addressId' => 1
         ];
 
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $user);
         $responseInvalid = $this->put("$this->baseURL/1", ['addressId' => 1]);
         $responseNull = $this->put("$this->baseURL/1");
-        $responseNotFoundProduct = $this->put("$this->baseURL/1", $userInvalid);
+        $responseNotFoundUser = $this->put("$this->baseURL/1000", $user);
 
         $responseValid
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('userId', 'firstName', 'lastName', 'cpf', 'email', 'age', 'password', 'addressId')
-                    ->where('addressId', 2)
+                    ->hasAll(
+                        'userId',
+                        'firstName',
+                        'lastName',
+                        'cpf',
+                        'email',
+                        'birthday',
+                        'password',
+                        'addressId'
+                    )
+                    ->whereAll([
+                        'userId' => 1,
+                        'firstName' => $user['firstName'],
+                        'lastName' => $user['lastName'],
+                        'cpf' => $user['cpf'],
+                        'email' => $user['email'],
+                        'birthday' => $user['birthday'],
+                        'password' => fn (string $password) => Hash::check('password2', $password),
+                        'addressId' => 1
+                    ])
             );
 
         $responseInvalid->assertUnprocessable();
         $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertServiceUnavailable();
+        $responseNotFoundUser->assertNotFound();
     }
 
     /**
