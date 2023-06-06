@@ -28,7 +28,8 @@ class UpdateProductRequest extends FormRequest
             'name' => [$sometimes, 'required'],
             'description' => [$sometimes, 'required'],
             'supplierId' => [$sometimes, 'required'],
-            'imageId' => [$sometimes, 'required']
+            'imageId' => [$sometimes, 'required'],
+            'categoryId' => [$sometimes, 'required']
         ];
     }
 
@@ -44,7 +45,10 @@ class UpdateProductRequest extends FormRequest
             $this->merge(['SUPPLIER_ID' => $this->supplierId]);
 
         if ($this->imageId)
-            $this->merge(['IMAGE_ID' => $this->imageId,]);
+            $this->merge(['IMAGE_ID' => $this->imageId]);
+
+        if ($this->categoryId)
+            $this->merge(['CATEGORY_ID' => $this->categoryId]);
     }
 
     /**
@@ -58,7 +62,8 @@ class UpdateProductRequest extends FormRequest
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
             'supplierId.required' => 'Fornecedor inválido.',
-            'imageId.required' => 'Imagem inválida.'
+            'imageId.required' => 'Imagem inválida.',
+            'categoryId.required' => 'Categoria inválida.'
         );
 
         return $messages;

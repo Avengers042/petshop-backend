@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,7 +23,8 @@ class ProductFactory extends Factory
             'NAME' => $this->faker->firstName(),
             'DESCRIPTION' => $this->faker->paragraph(),
             'SUPPLIER_ID' => Supplier::factory(),
-            'IMAGE_ID' => Image::factory()
+            'IMAGE_ID' => Image::factory(),
+            'CATEGORY_ID' => Category::factory()
         ];
     }
 }

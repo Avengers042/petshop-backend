@@ -23,7 +23,8 @@ class Product extends Model
         'NAME',
         'DESCRIPTION',
         'SUPPLIER_ID',
-        'IMAGE_ID'
+        'IMAGE_ID',
+        'CATEGORY_ID'
     ];
 
     public function supplier(): BelongsTo
@@ -43,5 +44,10 @@ class Product extends Model
     public function image(): HasOne
     {
         return $this->hasOne(Image::class, 'IMAGE_ID', 'IMAGE_ID');
+    }
+
+    public function category(): HasOne
+    {
+        return $this->hasOne(Product::class, 'CATEGORY_ID', 'CATEGORY_ID');
     }
 }

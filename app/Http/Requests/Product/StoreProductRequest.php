@@ -25,7 +25,8 @@ class StoreProductRequest extends FormRequest
             'name' => ['required'],
             'description' => ['required'],
             'supplierId' => ['required'],
-            'imageId' => ['required']
+            'imageId' => ['required'],
+            'categoryId' => ['required']
         ];
     }
 
@@ -36,6 +37,7 @@ class StoreProductRequest extends FormRequest
             'DESCRIPTION' => $this->description,
             'SUPPLIER_ID' => $this->supplierId,
             'IMAGE_ID' => $this->imageId,
+            'CATEGORY_ID' => $this->categoryId
         ]);
     }
 
@@ -50,7 +52,8 @@ class StoreProductRequest extends FormRequest
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
             'supplierId.required' => 'Fornecedor inválido.',
-            'imageId.required' => 'Imagem inválida.'
+            'imageId.required' => 'Imagem inválida.',
+            'categoryId.required' => 'Categoria inválida.'
         );
 
         return $messages;
