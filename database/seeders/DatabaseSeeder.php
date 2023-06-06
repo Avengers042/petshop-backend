@@ -10,13 +10,17 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+    public function run() : void
     {
-        $this->call([AddressSeeder::class]);
-        $this->call([UserSeeder::class]);
-        $this->call([SupplierSeeder::class]);
-        $this->call([ProductSeeder::class]);
-        $this->call([PurchaseSeeder::class]);
-        $this->call([StockSeeder::class]);
+        $this->call([
+            AddressSeeder::class,
+            UserSeeder::class,
+            SupplierSeeder::class,
+            ImageSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+            PurchaseSeeder::class,
+            StockSeeder::class,
+        ]);
     }
 }
