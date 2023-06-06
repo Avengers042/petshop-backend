@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('IMAGE_ID')->autoIncrement();
             $table->string('IMAGE_NAME', 50);
             $table->string('IMAGE_ALT', 200);
+            $table->index('IMAGE_ID');
         });
     }
 
