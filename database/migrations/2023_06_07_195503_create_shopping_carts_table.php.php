@@ -13,12 +13,12 @@ class CreateShoppingCartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shopping_carts', function (Blueprint $table) {
-            $table->unsignedBigInteger('shopping_cart_id')->primary();
-            $table->unsignedBigInteger('product_id');
-            $table->integer('amount');
+        Schema::create('SHOPPING_CARTS', function (Blueprint $table) {
+            $table->unsignedBigInteger('SHOPPING_CART_ID')->primary();
+            $table->unsignedBigInteger('PRODUCT_ID');
+            $table->integer('AMOUNT');
 
-            $table->foreign('product_id')->references('PRODUCT_ID')->on('products');
+            $table->foreign('PRODUCT_ID')->references('PRODUCT_ID')->on('products');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateShoppingCartsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shopping_carts');
+        Schema::dropIfExists('SHOPPING_CARTS');
     }
 }
