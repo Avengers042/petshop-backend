@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
@@ -30,4 +31,5 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('products', ProductController::class);
     Route::apiResource('images', ImageController::class);
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('carts', ShoppingCartController::class);
 });
