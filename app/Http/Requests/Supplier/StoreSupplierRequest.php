@@ -37,7 +37,7 @@ class StoreSupplierRequest extends FormRequest
             ],
             'commercialPhone' => [
                 'required',
-                'numeric'
+                'regex:/\(+[0-9]{2,3}\) [0-9]{4,5}-[0-9]{4}$/'
             ],
             'addressId' => ['required'],
         ];
@@ -75,7 +75,7 @@ class StoreSupplierRequest extends FormRequest
             'email.unique' => 'Email já existente',
             'email.email' => 'Email inválido',
             'commercialPhone.required' => 'Telefone comercial inválido',
-            'commercialPhone.numeric' => 'Telefone deve conter só números',
+            'commercialPhone.regex' => 'Formato do telefone comercial inválido.',
             'addressId.required' => 'Endereço inválido'
         );
 

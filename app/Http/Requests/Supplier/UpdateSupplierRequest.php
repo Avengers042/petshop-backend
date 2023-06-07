@@ -49,7 +49,7 @@ class UpdateSupplierRequest extends FormRequest
             'commercialPhone' => [
                 $sometimes,
                 'required',
-                'numeric'
+                'regex:/\(+[0-9]{2,3}\) [0-9]{4,5}-[0-9]{4}$/'
             ],
             'addressId' => [
                 $sometimes,
@@ -99,7 +99,7 @@ class UpdateSupplierRequest extends FormRequest
             'email.unique' => 'Email já existente',
             'email.email' => 'Email inválido',
             'commercialPhone.required' => 'Telefone comercial inválido',
-            'commercialPhone.numeric' => 'Telefone deve conter só números',
+            'commercialPhone.regex' => 'Formato do telefone comercial inválido.',
             'addressId.required' => 'Endereço inválido'
         );
 

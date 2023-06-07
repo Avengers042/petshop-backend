@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('TRADE_NAME', 50);
             $table->char('CNPJ', 14)->unique();
             $table->string('EMAIL', 256)->unique();
-            $table->integer('COMMERCIAL_PHONE');
+            $table->string('COMMERCIAL_PHONE', 20);
             $table->unsignedBigInteger('ADDRESS_ID');
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
             $table->index('SUPPLIER_ID');

@@ -61,7 +61,7 @@ class SupplierTest extends TestCase
             'tradeName' => 'Empresa',
             'cnpj' => '30168490000109',
             'email' => 'teste@teste.com',
-            'commercialPhone' => 950618943,
+            'commercialPhone' => "(99) 9999-9999",
             'addressId' => 1
         ];
 
@@ -70,7 +70,7 @@ class SupplierTest extends TestCase
             'tradeName' => 'Empresa',
             'cnpj' => '30168490000109',
             'email' => 'teste@teste.com',
-            'commercialPhone' => 950618943,
+            'commercialPhone' => "(99) 9999-9999",
             'addressId' => 1
         ];
 
@@ -79,7 +79,7 @@ class SupplierTest extends TestCase
             'tradeName' => 'Empresa',
             'cnpj' => '30168490000999',
             'email' => 'testing@testing.com',
-            'commercialPhone' => 950618943,
+            'commercialPhone' => "(99) 9999-9999",
             'addressId' => 100
         ];
 
@@ -106,7 +106,7 @@ class SupplierTest extends TestCase
                         'tradeName' => 'Empresa',
                         'cnpj' => '30168490000109',
                         'email' => 'teste@teste.com',
-                        'commercialPhone' => 950618943,
+                        'commercialPhone' => "(99) 9999-9999",
                         'addressId' => 1
                     ])
             );
@@ -126,7 +126,7 @@ class SupplierTest extends TestCase
             'tradeName' => 'Empresa',
             'cnpj' => '30168490000109',
             'email' => 'teste@email.com',
-            'commercialPhone' => 950618943,
+            'commercialPhone' => "(99) 9999-9999",
             'addressId' => 1
         ];
 
@@ -135,7 +135,7 @@ class SupplierTest extends TestCase
             'tradeName' => 'Empresa',
             'cnpj' => '30168490000109',
             'email' => 'teste@teste.com',
-            'commercialPhone' => 950618943,
+            'commercialPhone' => "(99) 9999-9999",
             'addressId' => 1
         ];
 
@@ -162,7 +162,7 @@ class SupplierTest extends TestCase
                         'tradeName' => 'Empresa',
                         'cnpj' => '30168490000109',
                         'email' => 'teste@email.com',
-                        'commercialPhone' => 950618943,
+                        'commercialPhone' => "(99) 9999-9999",
                         'addressId' => 1
                     ])
             );

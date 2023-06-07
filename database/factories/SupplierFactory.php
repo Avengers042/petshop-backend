@@ -18,14 +18,12 @@ class SupplierFactory extends Factory
      */
     public function definition() : array
     {
-        $commercialPhone = intval(str_replace('-', '', $this->faker->cellphone()));
-
         return [
             'CORPORATE_NAME' => $this->faker->company(),
             'TRADE_NAME' => $this->faker->firstName(),
             'CNPJ' => $this->faker->cnpj(false),
             'EMAIL' => $this->faker->companyEmail(),
-            'COMMERCIAL_PHONE' => $commercialPhone,
+            'COMMERCIAL_PHONE' => $this->faker->phoneNumber(),
             'ADDRESS_ID' => Address::factory()
         ];
     }
