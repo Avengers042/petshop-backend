@@ -4,6 +4,7 @@ namespace tests\Feature\ProductTest;
 
 use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -35,7 +36,7 @@ class ProductTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
-                ->hasAll('productId', 'name', 'description', 'supplierId', 'imageId', 'categoryId')
+                ->hasAll('productId', 'name', 'description', 'supplierId', 'price', 'imageId', 'categoryId')
                 ->where('productId', 1)
             );
 
@@ -51,6 +52,7 @@ class ProductTest extends TestCase
             'name' => "test",
             'description' => "testdesc",
             'supplierId' => 1,
+            'price' => 100,
             'imageId' => 1,
             'categoryId' => 1
         ];
@@ -58,6 +60,7 @@ class ProductTest extends TestCase
         $productInvalid = [
             'description' => "",
             'supplierId' => 0,
+            'price' => 0,
             'imageId' => 0,
             'categoryId' => 0
         ];
@@ -66,6 +69,7 @@ class ProductTest extends TestCase
             'name' => "test",
             'description' => "testdesc",
             'supplierId' => 100,
+            'price' => 0,
             'imageId' => 100,
             'categoryId' => 100
         ];
@@ -81,11 +85,12 @@ class ProductTest extends TestCase
             ->assertJson(
                 fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('productId', 'name', 'description', 'supplierId', 'imageId', 'categoryId')
+                    ->hasAll('productId', 'name', 'description', 'supplierId', 'price', 'imageId', 'categoryId')
                     ->whereAll([
                         'name' => 'test',
                         'description' => 'testdesc',
                         'supplierId' => 1,
+                        'price' => 100,
                         'imageId' => 1,
                         'categoryId' => 1
                     ])
@@ -102,36 +107,40 @@ class ProductTest extends TestCase
     public function testUpdateProduct() : void
     {
         $product = [
-            'name' => "testing",
-            'description' => "testing description",
+            'name' => 'testing',
+            'description' => 'new description',
             'supplierId' => 1,
+            'price' => 0,
             'imageId' => 1,
             'categoryId' => 1
         ];
 
         $productInvalid = [
-            'name' => "",
             'description' => "",
             'supplierId' => 0,
+            'price' => 0,
             'imageId' => 0,
             'categoryId' => 0
         ];
 
         $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $product);
-        $responseInvalid = $this->put("$this->baseURL/1", ['name' => 'teste']);
+        $responseInvalid = $this->put("$this->baseURL/1", $productInvalid);
         $responseNull = $this->put("$this->baseURL/1");
-        $responseNotFoundProduct = $this->put("$this->baseURL/100", $productInvalid);
+        $responseNotFoundProduct = $this->put("$this->baseURL/100", $product);
 
+        Log::debug($responseValid->getContent());
         $responseValid
             ->assertOk()
             ->assertJson(
                 fn (AssertableJson $json) =>
                 $json
-                    ->hasAll('productId', 'name', 'description', 'supplierId', 'categoryId')
+                    ->hasAll('productId', 'name', 'description', 'supplierId', 'price', 'imageId', 'categoryId')
                     ->whereAll([
+                        'productId' => 1,
                         'name' => 'testing',
-                        'description' => 'testing description',
+                        'description' => 'new description',
                         'supplierId' => 1,
+                        'price' => 0,
                         'imageId' => 1,
                         'categoryId' => 1
                     ])
