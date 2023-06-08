@@ -8,13 +8,13 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up() : void
+    public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
             $table->unsignedBigInteger('PRODUCT_ID')->autoIncrement();
             $table->string('NAME', 25);
             $table->text('DESCRIPTION');
-            $table->integer('PRICE');
+            $table->decimal('PRICE', 8, 2);
             $table->unsignedBigInteger('SUPPLIER_ID');
             $table->unsignedBigInteger('IMAGE_ID');
             $table->unsignedBigInteger('CATEGORY_ID');
@@ -28,7 +28,7 @@ return new class extends Migration {
     /**
      * Reverse the migrations.
      */
-    public function down() : void
+    public function down(): void
     {
         Schema::dropIfExists('products');
     }
