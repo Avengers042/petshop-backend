@@ -17,8 +17,8 @@ class ShoppingCartFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => Product::factory(),
-            'amount' => $this->faker->randomNumber(2),
+            'PRODUCT_ID' => Product::factory(),
+            'AMOUNT' => $this->faker->randomNumber(2),
         ];
     }
 }

@@ -11,16 +11,16 @@ class ShoppingCart extends Model
     use HasFactory;
 
     protected $table = 'shopping_carts';
-    protected $primaryKey = 'shopping_cart_id';
+    protected $primaryKey = 'SHOPPING_CART_ID';
     public $timestamps = false;
 
     protected $fillable = [
-        'product_id',
-        'amount',
+        'PRODUCT_ID',
+        'AMOUNT',
     ];
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id', 'PRODUCT_ID');
+        return $this->belongsTo(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
     }
 }

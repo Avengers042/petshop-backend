@@ -30,8 +30,8 @@ class StoreShoppingCartRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'product_id' => $this->productId,
-            'amount' => $this->amount,
+            'PRODUCT_ID' => $this->productId,
+            'AMOUNT' => $this->amount,
         ]);
     }
 
