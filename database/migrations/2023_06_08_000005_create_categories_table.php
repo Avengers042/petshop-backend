@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->unsignedBigInteger('CATEGORY_ID')->autoIncrement();
-            $table->string('NAME', 100);
+            $table->string('NAME', 100)->unique();
             $table->index('CATEGORY_ID');
         });
     }
