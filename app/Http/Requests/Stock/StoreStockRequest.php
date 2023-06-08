@@ -11,7 +11,8 @@ class StoreStockRequest extends FormRequest
      */
     public function authorize() : bool
     {
-        return true;
+        $user = $this->user();
+        return $user != null && $user->tokenCan('create');
     }
 
     /**
