@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\ShoppingCart;
+namespace Database\Factories;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ShoppingCartFactory extends Factory
@@ -12,7 +13,10 @@ class ShoppingCartFactory extends Factory
      */
     public function definition(): array
     {
+        static $number = 1;
+
         return [
+            'SHOPPING_CART_ID' => $number++
         ];
     }
 }
