@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('ADDRESS_ID');
             $table->unsignedBigInteger('SHOPPING_CART_ID');
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
-            $table->foreign('SHOPPING_CART_ID')->references('SHOPPING_CART_ID')->on('SHOPPING_CARTS');
+            $table->foreign('SHOPPING_CART_ID')->references('SHOPPING_CART_ID')->on('shopping_carts');
             $table->index('USER_ID');
         });
     }

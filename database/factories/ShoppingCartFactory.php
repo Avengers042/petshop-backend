@@ -13,7 +13,6 @@ class ShoppingCartFactory extends Factory
     public function definition(): array
     {
         return [
-            'shoppingCartId' => $this->faker->unique()->randomNumber(),
         ];
     }
 }

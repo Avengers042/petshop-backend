@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ShoppingCart;
-use App\Http\Requests\ShoppingCart\UpdateShoppingCartRequest;
 use App\Http\Requests\ShoppingCart\StoreShoppingCartRequest;
-use App\Http\Resources\ShoppingCart\ShoppingCartResource;
+use App\Http\Requests\ShoppingCart\UpdateShoppingCartRequest;
 use App\Http\Resources\ShoppingCart\ShoppingCartCollection;
-use Illuminate\Support\Facades\Log;
+use App\Http\Resources\ShoppingCart\ShoppingCartResource;
+use App\Models\ShoppingCart;
 
 class ShoppingCartController extends Controller
 {
