@@ -22,7 +22,7 @@ class ProductFactory extends Factory
         return [
             'NAME' => $this->faker->firstName(),
             'DESCRIPTION' => $this->faker->paragraph(),
-            'PRICE' => $this->faker->randomNumber(2),
+            'PRICE' => $this->faker->randomFloat(2, 0, 1000),
             'SUPPLIER_ID' => Supplier::factory(),
             'IMAGE_ID' => Image::factory(),
             'CATEGORY_ID' => Category::factory()
