@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('PRODUCT_ID')->autoIncrement();
             $table->string('NAME', 25);
             $table->text('DESCRIPTION');
+            $table->integer('PRICE');
             $table->unsignedBigInteger('SUPPLIER_ID');
             $table->unsignedBigInteger('IMAGE_ID');
             $table->unsignedBigInteger('CATEGORY_ID');

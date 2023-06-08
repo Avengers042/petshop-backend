@@ -24,6 +24,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required'],
             'description' => ['required'],
+            'price' => ['required'],
             'supplierId' => ['required'],
             'imageId' => ['required'],
             'categoryId' => ['required']
@@ -35,6 +36,7 @@ class StoreProductRequest extends FormRequest
         $this->merge([
             'NAME' => $this->name,
             'DESCRIPTION' => $this->description,
+            'PRICE' => $this->price,
             'SUPPLIER_ID' => $this->supplierId,
             'IMAGE_ID' => $this->imageId,
             'CATEGORY_ID' => $this->categoryId
@@ -51,6 +53,7 @@ class StoreProductRequest extends FormRequest
         $messages = array(
             'name.required' => 'Nome inválido.',
             'description.required' => 'Descrição inválida.',
+            'price.required' => 'Preço inválido',
             'supplierId.required' => 'Fornecedor inválido.',
             'imageId.required' => 'Imagem inválida.',
             'categoryId.required' => 'Categoria inválida.'
