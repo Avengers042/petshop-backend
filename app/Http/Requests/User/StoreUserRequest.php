@@ -33,7 +33,8 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'email'],
             'birthday' => ['required'],
             'password' => ['required'],
-            'addressId' => ['required']
+            'addressId' => ['required'],
+            'shoppingCartId' => ['required']
         ];
     }
 
@@ -49,7 +50,8 @@ class StoreUserRequest extends FormRequest
             'EMAIL' => $this->email,
             'BIRTHDAY' => $this->birthday,
             'PASSWORD' => $this->password,
-            'ADDRESS_ID' => $this->addressId
+            'ADDRESS_ID' => $this->addressId,
+            'SHOPPING_CART_ID' => $this->shoppingCartId
         ]);
     }
 
@@ -71,7 +73,8 @@ class StoreUserRequest extends FormRequest
             'email.email' => 'Email inválido',
             'birthday.required' => 'Data de nascimento inválida',
             'password.required' => 'Senha inválida',
-            'addressId.required' => 'Endereço inválido'
+            'addressId.required' => 'Endereço inválido',
+            'shoppingCartId.required' => 'Carrinho de compras inválido'
         );
 
         return $messages;

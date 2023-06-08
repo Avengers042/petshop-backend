@@ -25,7 +25,8 @@ class UserFactory extends Factory
             'EMAIL' => $this->faker->safeEmail(),
             'BIRTHDAY' => $this->faker->date(),
             'PASSWORD' => Hash::make($this->faker->password()),
-            'ADDRESS_ID' => Address::factory()
+            'ADDRESS_ID' => Address::factory(),
+            'SHOPPING_CART_ID' => ShoppingCart::factory()
         ];
     }
 }

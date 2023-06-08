@@ -28,7 +28,8 @@ class User extends Authenticatable
         'EMAIL',
         'BIRTHDAY',
         'PASSWORD',
-        'ADDRESS_ID'
+        'ADDRESS_ID',
+        'SHOPPING_CART_ID'
     ];
 
     /**
@@ -66,5 +67,9 @@ class User extends Authenticatable
     public function address() : HasOne
     {
         return $this->hasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
+    }
+
+    public function shoppingCarts(): HasOne {
+        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID');
     }
 }

@@ -37,7 +37,8 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required', 'email'],
             'birthday' => [$sometimes, 'required'],
             'password' => [$sometimes, 'required'],
-            'addressId' => [$sometimes, 'required']
+            'addressId' => [$sometimes, 'required'],
+            'shoppingCartId' => [$sometimes, 'required']
         ];
     }
 
@@ -66,6 +67,9 @@ class UpdateUserRequest extends FormRequest
 
         if ($this->addressId)
             $this->merge(['ADDRESS_ID' => $this->addressId]);
+
+        if ($this->shoppingCartId)
+            $this->merge(['SHOPPING_CART_ID' => $this->shoppingCartId]);
     }
 
     /**
@@ -86,7 +90,8 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Email inválido',
             'birthday.required' => 'Data de nascimento inválida',
             'password.required' => 'Senha inválida',
-            'addressId.required' => 'Endereço inválido'
+            'addressId.required' => 'Endereço inválido',
+            'shoppingCartId.required' => 'Carrinho de compras inválido'
         );
 
         return $messages;
