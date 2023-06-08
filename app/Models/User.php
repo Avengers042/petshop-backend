@@ -70,6 +70,6 @@ class User extends Authenticatable
     }
 
     public function shoppingCarts(): HasOne {
-        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID');
+        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID', 'SHOPPING_CART_ID');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Purchase extends Model
 {
@@ -26,17 +27,18 @@ class Purchase extends Model
         'AMOUNT'
     ];
 
-    public function products(): HasMany
+    public function products() : HasMany
     {
         return $this->hasMany(Product::class, 'PRODUCT_ID', 'PRODUCT_ID');
     }
 
-    public function user(): BelongsTo
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class, 'USER_ID', 'USER_ID');
     }
 
-    public function shoppingCarts(): HasOne {
-        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID');
+    public function shoppingCart() : HasOne
+    {
+        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID', 'SHOPPING_CART_ID');
     }
 }
