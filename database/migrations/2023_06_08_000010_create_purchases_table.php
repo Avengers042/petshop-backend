@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->unsignedBigInteger('PURCHASE_ID')->autoIncrement();
+            $table->integer('AMOUNT');
             $table->unsignedBigInteger('SHOPPING_CART_ID');
             $table->unsignedBigInteger('USER_ID');
             $table->unsignedBigInteger('PRODUCT_ID');
