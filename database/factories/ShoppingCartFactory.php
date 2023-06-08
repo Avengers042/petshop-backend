@@ -1,12 +1,8 @@
 <?php
 
-use App\Models\Product;
 use App\Models\ShoppingCart;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ShoppingCart>
- */
 class ShoppingCartFactory extends Factory
 {
     /**
@@ -17,8 +13,7 @@ class ShoppingCartFactory extends Factory
     public function definition(): array
     {
         return [
-            'PRODUCT_ID' => Product::factory(),
-            'AMOUNT' => $this->faker->randomNumber(2),
+            'shoppingCartId' => $this->faker->unique()->randomNumber(),
         ];
     }
 }

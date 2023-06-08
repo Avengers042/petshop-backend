@@ -3,21 +3,17 @@
 namespace App\Http\Resources\ShoppingCart;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ShoppingCartResource extends JsonResource
+class ProductCollection extends ResourceCollection
 {
     /**
-     * Transform the resource into an array.
+     * Transform the resource collection into an array.
      *
-     * @return array<string, mixed>
+     * @return array<int|string, mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'productId' => $this->product_id,
-            'amount' => $this->amount,
-        ];
+        return parent::toArray($request);
     }
 }

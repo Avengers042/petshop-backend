@@ -22,16 +22,17 @@ class UpdateShoppingCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'productId' => ['required'],
-            'amount' => ['required', 'integer', 'min:1'],
+            'shoppingCartId' => ['required'],
         ];
     }
 
+    /**
+     * Prepare the data for validation.
+     */
     protected function prepareForValidation()
     {
         $this->merge([
-            'PRODUCT_ID' => $this->productId,
-            'AMOUNT' => $this->amount,
+            'SHOPPING_CART_ID' => $this->shoppingCartId,
         ]);
     }
 
@@ -43,10 +44,7 @@ class UpdateShoppingCartRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'productId.required' => 'O ID do produto é obrigatório.',
-            'amount.required' => 'A quantidade é obrigatória.',
-            'amount.integer' => 'A quantidade deve ser um número inteiro.',
-            'amount.min' => 'A quantidade deve ser pelo menos 1.',
+            'shoppingCartId.required' => 'O ID do carrinho de compras é obrigatório.',
         ];
     }
 }

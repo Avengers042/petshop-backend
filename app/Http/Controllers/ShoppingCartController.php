@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ShoppingCart\StoreShoppingCartRequest;
-use App\Http\Requests\ShoppingCart\UpdateShoppingCartRequest;
-use App\Http\Resources\ShoppingCart\ShoppingCartCollection;
-use App\Http\Resources\ShoppingCart\ShoppingCartResource;
 use App\Models\ShoppingCart;
+use App\Http\Requests\ShoppingCart\UpdateShoppingCartRequest;
+use App\Http\Requests\ShoppingCart\StoreShoppingCartRequest;
+use App\Http\Resources\ShoppingCart\ShoppingCartResource;
+use App\Http\Resources\ShoppingCart\ShoppingCartCollection;
+use Illuminate\Support\Facades\Log;
 
 class ShoppingCartController extends Controller
 {
@@ -23,12 +24,7 @@ class ShoppingCartController extends Controller
      */
     public function store(StoreShoppingCartRequest $request)
     {
-        $shoppingCart = ShoppingCart::create([
-            'product_id' => $request->input('productId'),
-            'amount' => $request->input('amount'),
-        ]);
-
-        return response()->json(new ShoppingCartResource($shoppingCart))->setStatusCode(201);
+        return response()->json(new ShoppingCartResource(ShoppingCart::create($request->all())))->setStatusCode(201);
     }
 
     /**
@@ -44,10 +40,7 @@ class ShoppingCartController extends Controller
      */
     public function update(UpdateShoppingCartRequest $request, ShoppingCart $shoppingCart)
     {
-        $shoppingCart->amount = $request->input('amount');
-        $shoppingCart->save();
-
-        return response()->json(new ShoppingCartResource($shoppingCart));
+        return response()->json(new ShoppingCartResource(tap($shoppingCart)->update($request->all())));
     }
 
     /**
@@ -55,8 +48,6 @@ class ShoppingCartController extends Controller
      */
     public function destroy(ShoppingCart $shoppingCart)
     {
-        $shoppingCart->delete();
-
-        return response()->json(null)->setStatusCode(204);
+        return response()->json(new ShoppingCartResource(tap($shoppingCart)->delete()));
     }
 }
