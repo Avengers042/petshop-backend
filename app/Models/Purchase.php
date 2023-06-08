@@ -13,15 +13,17 @@ class Purchase extends Model
 
     protected $primaryKey = 'PURCHASE_ID';
     public $timestamps = false;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'SHOPPING_CART_ID',
+        'USER_ID',
         'PRODUCT_ID',
-        'USER_ID'
+        'AMOUNT'
     ];
 
     public function products(): HasMany
@@ -32,5 +34,9 @@ class Purchase extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'USER_ID', 'USER_ID');
+    }
+
+    public function shoppingCarts(): HasOne {
+        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID');
     }
 }

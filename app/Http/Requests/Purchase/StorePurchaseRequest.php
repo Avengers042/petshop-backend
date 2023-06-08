@@ -22,8 +22,9 @@ class StorePurchaseRequest extends FormRequest
     public function rules() : array
     {
         return [
+            'shoppingCartId' => ['required'],
             'productId' => ['required'],
-            'userId' => ['required'],
+            'userId' => ['required']
         ];
     }
 
@@ -33,8 +34,9 @@ class StorePurchaseRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
+            'SHOPPING_CART_ID' => $this->shoppingCartId,
             'PRODUCT_ID' => $this->productId,
-            'USER_ID' => $this->userId,
+            'USER_ID' => $this->userId
         ]);
     }
 
@@ -46,8 +48,9 @@ class StorePurchaseRequest extends FormRequest
     public function messages() : array
     {
         $messages = array(
+            'shoppingCartId.required' => 'Carrinho de compras inválido',
             'productId.required' => 'Produto inválido',
-            'userId.required' => 'Usuário inválido',
+            'userId.required' => 'Usuário inválido'
         );
 
         return $messages;

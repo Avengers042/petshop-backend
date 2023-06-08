@@ -16,8 +16,10 @@ class PurchaseResource extends JsonResource
     {
         return [
             'purchaseId' => $this->PURCHASE_ID,
-            'productId' => $this->PRODUCT_ID,
+            'shoppingCartId' => $this->SHOPPING_CART_ID,
             'userId' => $this->USER_ID,
+            'productId' => $this->PRODUCT_ID,
+            'amount' => $this->AMOUNT
         ];
     }
 }

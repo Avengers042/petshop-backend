@@ -19,6 +19,7 @@ class PurchaseFactory extends Factory
     public function definition() : array
     {
         return [
+            'SHOPPING_CART_ID' => ShoppingCart::factory(),
             'PRODUCT_ID' => Product::factory(),
             'USER_ID' => User::factory(),
         ];

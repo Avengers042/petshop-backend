@@ -23,8 +23,9 @@ class UpdatePurchaseRequest extends FormRequest
     {
         $method = $this->getMethod();
         $sometimes = $method == 'PATCH' ? 'sometimes' : null;
-        
+
         return [
+            'shoppingCartId' => [$sometimes, 'required'],
             'productId' => [$sometimes, 'required'],
             'userId' => [$sometimes, 'required'],
         ];
@@ -39,7 +40,10 @@ class UpdatePurchaseRequest extends FormRequest
             $this->merge(['PRODUCT_ID' => $this->productId]);
 
         if ($this->userId)
-            $this->merge(['USER_ID' => $this->userId,]);
+            $this->merge(['USER_ID' => $this->userId]);
+
+        if ($this->userId)
+            $this->merge(['SHOPPING_CART_ID' => $this->shoppingCartId]);
     }
 
     /**
@@ -50,6 +54,7 @@ class UpdatePurchaseRequest extends FormRequest
     public function messages() : array
     {
         $messages = array(
+            'shoppingCartId.required' => 'Carrinho de compras inválido',
             'productId.required' => 'Produto inválido',
             'userId.required' => 'Usuário inválido',
         );
