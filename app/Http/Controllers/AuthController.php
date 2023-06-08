@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AuthRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\LogoutRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(AuthRequest $request)
+    public function login(LoginRequest $request)
     {
         if (!Auth::attempt($request->all())) {
             return response()->json([
@@ -24,7 +25,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Usuário não existente']);
         };
 
-        $token = $user->createToken('auth-token', ['user:all'])->plainTextToken;
+        $token = $user->createToken('auth-token', ['create', 'update', 'delete'])->plainTextToken;
 
         return response()->json([
             'access_token' => $token,
@@ -32,7 +33,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function logout(AuthRequest $request)
+    public function logout(LogoutRequest $request)
     {
         $user = null;
 
