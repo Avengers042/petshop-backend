@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('BIRTHDAY');
             $table->string('PASSWORD', 100);
             $table->unsignedBigInteger('ADDRESS_ID');
-            $table->unsignedBigInteger('SHOPPING_CART_ID');
+            $table->unsignedBigInteger('SHOPPING_CART_ID')->nullable();
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
             $table->foreign('SHOPPING_CART_ID')->references('SHOPPING_CART_ID')->on('shopping_carts');
             $table->index('USER_ID');

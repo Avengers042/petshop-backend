@@ -30,16 +30,17 @@ class UpdateUserRequest extends FormRequest
             'firstName' => [$sometimes, 'required'],
             'lastName' => [$sometimes, 'required'],
             'cpf' => [
+                $sometimes,
                 'required',
                 'digits:11',
                 'unique:App\Models\User,cpf',
                 'numeric'
             ],
-            'email' => ['required', 'email'],
+            'email' => [$sometimes,'required', 'email'],
             'birthday' => [$sometimes, 'required'],
             'password' => [$sometimes, 'required'],
             'addressId' => [$sometimes, 'required'],
-            'shoppingCartId' => [$sometimes, 'required']
+            'shoppingCartId' => [$sometimes, 'nullable']
         ];
     }
 
@@ -92,7 +93,6 @@ class UpdateUserRequest extends FormRequest
             'birthday.required' => 'Data de nascimento inválida',
             'password.required' => 'Senha inválida',
             'addressId.required' => 'Endereço inválido',
-            'shoppingCartId.required' => 'Carrinho de compras inválido'
         );
 
         return $messages;

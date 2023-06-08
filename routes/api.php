@@ -49,5 +49,5 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('carts', ShoppingCartController::class)->except(['create', 'update']);
 
     Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
+    Route::post('logout', 'AuthController@logout')->middleware('auth:sanctum');
 });
