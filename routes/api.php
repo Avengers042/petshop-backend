@@ -32,4 +32,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::apiResource('images', ImageController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('carts', ShoppingCartController::class);
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
 });

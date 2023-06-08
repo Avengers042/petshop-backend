@@ -3,13 +3,14 @@
 namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -42,7 +43,7 @@ class UpdateProductRequest extends FormRequest
         if ($this->description)
             $this->merge(['DESCRIPTION' => $this->description]);
 
-        if ($this->price)
+        if (isset($this->price))
             $this->merge(['PRICE' => $this->price]);
 
         if ($this->supplierId)
