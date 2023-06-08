@@ -14,7 +14,8 @@ class CreateShoppingCartsTable extends Migration
     public function up():void
     {
         Schema::create('shopping_carts', function (Blueprint $table) {
-            $table->unsignedBigInteger('shoppingCartId')->autoIncrement();
+            $table->unsignedBigInteger('SHOPPING_CART_ID')->primary();
+            $table->index('SHOPPING_CART_ID');
         });
     }
 

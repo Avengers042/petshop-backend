@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('EMAIL', 100)->unique();
             $table->date('BIRTHDAY');
             $table->string('PASSWORD', 100);
-            $table->unsignedBigInteger('ADDRESS_ID'); 
+            $table->unsignedBigInteger('ADDRESS_ID');
+            $table->unsignedBigInteger('SHOPPING_CART_ID');
             $table->foreign('ADDRESS_ID')->references('ADDRESS_ID')->on('addresses');
+            $table->foreign('SHOPPING_CART_ID')->references('SHOPPING_CART_ID')->on('SHOPPING_CARTS');
             $table->index('USER_ID');
         });
     }
