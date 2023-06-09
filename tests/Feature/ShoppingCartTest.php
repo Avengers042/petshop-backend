@@ -2,19 +2,20 @@
 
 namespace Tests\Feature;
 
-use Database\Seeders\CategorySeeder;
+use Database\Seeders\ShoppingCartSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\ShoppingCart;
 use Illuminate\Foundation\Testing\WithFaker;
 
-class CategoryTest extends TestCase
+class ShoppingCartTest extends TestCase
 {
     use DatabaseMigrations, WithFaker;
 
-    protected $baseURL = '/api/categories';
-    protected $seeder = CategorySeeder::class;
+    protected $baseURL = '/api/shopping-carts';
+    protected $seeder = ShoppingCartSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
     protected $login;
 
@@ -32,7 +33,7 @@ class CategoryTest extends TestCase
             'shoppingCartId' => 1
         ];
 
-        $this->withHeaders($this->headers)->post("$this->baseURL", $user);
+        $this->withHeaders($this->headers)->post("/api/users", $user);
 
         $baseUser = [
             'email' => "testing@testing.com",
@@ -43,9 +44,9 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * Check if the route /categories return all 25 categories registers
+     * Check if the route /shopping-carts returns all shopping carts
      */
-    public function testGetAllCategories(): void
+    public function testGetAllShoppingCarts(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -56,9 +57,9 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * Check if the route /categories return one value
+     * Check if the route /shopping-carts/{id} returns a specific shopping cart
      */
-    public function testGetOneCategory(): void
+    public function testGetOneShoppingCart(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
@@ -71,11 +72,10 @@ class CategoryTest extends TestCase
             ->assertJson(fn (AssertableJson $json) =>
                 $json
                     ->hasAll(
-                        'categoryId',
-                        'name',
+                        'SHOPPING_CART_ID'
                     )
                     ->whereAll([
-                        'categoryId' => 1,
+                        'SHOPPING_CART_ID' => 1,
                     ])
             );
 
@@ -83,110 +83,85 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * Check if the route /categories can create a category
-     *
-     * @doesNotPerformAssertions
+     * Check if the route /shopping-carts can create a shopping cart
      */
-    public function testCreateCategory(): void
+    public function testCreateShoppingCart(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $category = [
-            'name' => 'Dog',
+        $shoppingCart = [
+            'SHOPPING_CART_ID' => 4,
         ];
 
         $responseValid = $this
             ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
             ->withHeaders($this->headers)
-            ->post("$this->baseURL/1", $category);
+            ->post($this->baseURL, $shoppingCart);
 
-        $categoryInvalid = [
-            'name' => 1,
-        ];
-
-        $responseValid = $this->withHeaders($this->headers)->post($this->baseURL, $category);
-        $responseInvalid = $this->post($this->baseURL, $categoryInvalid);
-        $responseNull = $this->post($this->baseURL);
+        $responseInvalid = $this->post($this->baseURL);
 
         $responseValid
             ->assertCreated()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
                     ->hasAll(
-                        'categoryId',
-                        'name',
+                        'SHOPPING_CART_ID'
                     )
                     ->whereAll([
-                        'name' => 'Dog'
+                        'SHOPPING_CART_ID' => 4
                     ])
             );
 
         $responseInvalid->assertUnprocessable();
-        $responseNull->assertUnprocessable();
     }
 
     /**
-     * Check if the route /categories can update a category
-     *
-     *@doesNotPerformAssertions
+     * Check if the route /shopping-carts/{id} can update a shopping cart
      */
-    public function testUpdateCategory(): void
+    public function testUpdateShoppingCart(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
-        $category = [
-            'name' => 'Cat',
+        $shoppingCart = [
+            'SHOPPING_CART_ID' => 1,
         ];
 
         $responseValid = $this
             ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
             ->withHeaders($this->headers)
-            ->put("$this->baseURL/1", $category);
+            ->put("$this->baseURL/1", $shoppingCart);
 
-        $categoryInvalid = [
-            'name' => 1,
-        ];
-
-        $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $category);
-        $responseInvalid = $this->put("$this->baseURL/1", $categoryInvalid);
-        $responseNull = $this->put("$this->baseURL/1");
-        $responseNotFoundProduct = $this->put("$this->baseURL/100", $category);
+        $responseInvalid = $this->put("$this->baseURL/1");
 
         $responseValid
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) =>
                 $json
                     ->hasAll(
-                        'categoryId',
-                        'name',
+                        'SHOPPING_CART_ID'
                     )
                     ->whereAll([
-                        'categoryId' => 1,
-                        'name' => 'Cat'
+                        'SHOPPING_CART_ID' => 1
                     ])
             );
 
         $responseInvalid->assertUnprocessable();
-        $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertNotFound();
     }
 
     /**
-     * Check if the route /categories can delete a category
-     *
-     * @doesNotPerformAssertions
+     * Check if the route /shopping-carts/{id} can delete a shopping cart
      */
-    public function testDeleteCategory(): void
+    public function testDeleteShoppingCart(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user);
 
         $responseValid = $this->withHeaders($this->headers)->delete("$this->baseURL/1");
-        $responseNotFoundProduct = $this->delete("$this->baseURL/1");
+        $responseNotFound = $this->delete("$this->baseURL/1");
 
         $responseValid->assertOk();
-        $responseNotFoundProduct->assertNotFound();
+        $responseNotFound->assertNotFound();
     }
 }

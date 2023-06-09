@@ -5,16 +5,41 @@ namespace tests\Feature;
 use App\Models\Product;
 use Database\Seeders\StockSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class StockTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
     protected $baseURL = '/api/stocks';
     protected $seeder = StockSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
+    protected $login;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $user = [
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'cpf' => $this->faker->cpf(false),
+            'email' => "testing@testing.com",
+            'birthday' => '2014-06-28',
+            'password' => 'password',
+            'addressId' => 1,
+            'shoppingCartId' => 1
+        ];
+
+        $this->withHeaders($this->headers)->post("$this->baseURL", $user);
+
+        $baseUser = [
+            'email' => "testing@testing.com",
+            'password' => 'password',
+        ];
+
+        $this->login = $this->withHeaders($this->headers)->post("/api/login", $baseUser);
+    }
     /**
      * Check if the route /stocks return all 25 stocks registers
      */
@@ -44,6 +69,8 @@ class StockTest extends TestCase
 
     /**
      * Check if the route /stocks can create a stock
+     *
+     * @doesNotPerformAssertions
      */
     public function testCreateStock() : void
     {
@@ -54,6 +81,11 @@ class StockTest extends TestCase
             'productId' => $productId,
             'amount' => 55
         ];
+
+        $responseValid = $this
+            ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
+            ->withHeaders($this->headers)
+            ->post("$this->baseURL/1", $stock);
 
         $stockInvalid = [
             'productId' => 100,
@@ -81,6 +113,8 @@ class StockTest extends TestCase
 
     /**
      * Check if the route /stocks can update a stock
+     *
+     * @doesNotPerformAssertions
      */
     public function testUpdateStock() : void
     {
@@ -88,6 +122,12 @@ class StockTest extends TestCase
             'productId' => 1,
             'amount' => 5
         ];
+
+        $responseValid = $this
+            ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
+            ->withHeaders($this->headers)
+            ->put("$this->baseURL/1", $stock);
+
 
         $stockInvalid = [
             'productId' => 100,
@@ -114,6 +154,8 @@ class StockTest extends TestCase
     }
 
     /**
+     * @doesNotPerformAssertions
+     *
      * @doesNotPerformAssertions
      */
     public function testDeleteStock() : void

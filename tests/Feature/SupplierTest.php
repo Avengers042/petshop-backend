@@ -4,15 +4,41 @@ namespace Tests\Feature;
 
 use Database\Seeders\SupplierSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class SupplierTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
     protected $baseURL = '/api/suppliers';
     protected $seeder = SupplierSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
+    protected $login;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $user = [
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'cpf' => $this->faker->cpf(false),
+            'email' => "testing@testing.com",
+            'birthday' => '2014-06-28',
+            'password' => 'password',
+            'addressId' => 1,
+            'shoppingCartId' => 1
+        ];
+
+        $this->withHeaders($this->headers)->post("$this->baseURL", $user);
+
+        $baseUser = [
+            'email' => "testing@testing.com",
+            'password' => 'password',
+        ];
+
+        $this->login = $this->withHeaders($this->headers)->post("/api/login", $baseUser);
+    }
 
     /**
      * Check if the route /suppliers return all 25 suppliers registers
@@ -64,6 +90,11 @@ class SupplierTest extends TestCase
             'commercialPhone' => "(99) 9999-9999",
             'addressId' => 1
         ];
+
+        $responseValid = $this
+            ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
+            ->withHeaders($this->headers)
+            ->post("$this->baseURL/1", $supplier);
 
         $supplierInvalid = [
             'corporateName' => 'Empresa LTDA',
@@ -130,6 +161,11 @@ class SupplierTest extends TestCase
             'addressId' => 1
         ];
 
+        $responseValid = $this
+            ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
+            ->withHeaders($this->headers)
+            ->put("$this->baseURL/1", $supplier);
+
         $supplierInvalid = [
             'corporateName' => 'Empresa LTDA',
             'tradeName' => 'Empresa',
@@ -174,7 +210,7 @@ class SupplierTest extends TestCase
 
     /**
      * Check if the route /suppliers can delete a supplier
-     * 
+     *
      * @doesNotPerformAssertions
      */
     public function testDeleteSupplier() : void

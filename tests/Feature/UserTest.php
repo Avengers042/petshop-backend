@@ -70,7 +70,7 @@ class UserTest extends TestCase
 
     /**
      * Check if the route /users can create a user
-     * 
+     *
      * @doesNotPerformAssertions
      */
     public function testCreateUser() : void
@@ -80,7 +80,7 @@ class UserTest extends TestCase
 
     /**
      * Check if the route /users can update a user
-     * 
+     *
      * @doesNotPerformAssertions
      */
     public function testUpdateUser() : void
@@ -90,7 +90,7 @@ class UserTest extends TestCase
 
     /**
      * Check if the route /users can delete a user
-     * 
+     *
      * @doesNotPerformAssertions
      */
     public function testDeleteUser() : void

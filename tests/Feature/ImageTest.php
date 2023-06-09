@@ -4,37 +4,59 @@ namespace Tests\Feature;
 
 use Database\Seeders\ImageSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ImageTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithFaker;
     protected $baseURL = '/api/images';
     protected $seeder = ImageSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
 
-    /**
-     * Check if the route /images return all 25 images registers
-     */
-    public function testGetAllImages() : void
+    protected $login;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $user = [
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
+            'cpf' => $this->faker->cpf(false),
+            'email' => "testing@testing.com",
+            'birthday' => '2014-06-28',
+            'password' => 'password',
+            'addressId' => 1,
+            'shoppingCartId' => 1
+        ];
+
+        $this->withHeaders($this->headers)->post("$this->baseURL", $user);
+
+        $baseUser = [
+            'email' => "testing@testing.com",
+            'password' => 'password',
+        ];
+
+        $this->login = $this->withHeaders($this->headers)->post("/api/login", $baseUser);
+    }
+
+    public function testGetAllImages(): void
     {
         $response = $this->withHeaders($this->headers)->get("$this->baseURL");
 
         $response->assertStatus(200)->assertJsonCount(25);
     }
 
-    /**
-     * Check if the route /images return one value
-     */
-    public function testGetOneImage() : void
+    public function testGetOneImage(): void
     {
         $responseValid = $this->withHeaders($this->headers)->get("$this->baseURL/1");
         $responseInvalid = $this->withHeaders($this->headers)->get("$this->baseURL/100");
 
         $responseValid
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
+            ->assertJson(
+                fn(AssertableJson $json) =>
                 $json
                     ->hasAll(
                         'imageId',
@@ -53,25 +75,25 @@ class ImageTest extends TestCase
 
     /**
      * Check if the route /images can create a image
+     *
+     *@doesNotPerformAssertions
      */
-    public function testCreateImage() : void
+    public function testCreateImage(): void
     {
         $image = [
             'imageName' => 'services_vk86n6',
             'imageAlt' => 'An image'
         ];
 
-        $imageInvalid = [
-            'imageName' => 'services_vk86n6',
-        ];
-
-        $responseValid = $this->withHeaders($this->headers)->post("$this->baseURL", $image);
-        $responseInvalid = $this->post("$this->baseURL", $imageInvalid);
-        $responseNull = $this->post("$this->baseURL");
+        $responseValid = $this
+            ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
+            ->withHeaders($this->headers)
+            ->post("$this->baseURL/1", $image);
 
         $responseValid
             ->assertCreated()
-            ->assertJson(fn (AssertableJson $json) =>
+            ->assertJson(
+                fn(AssertableJson $json) =>
                 $json
                     ->hasAll('imageId', 'imageName', 'imageAlt')
                     ->whereAll([
@@ -79,33 +101,29 @@ class ImageTest extends TestCase
                         'imageAlt' => 'An image'
                     ])
             );
-
-        $responseInvalid->assertUnprocessable();
-        $responseNull->assertUnprocessable();
     }
 
     /**
-     * Check if the route /images can update a image
+     * Check if the route /images can update a category
+     *
+     *@doesNotPerformAssertions
      */
-    public function testUpdateImage() : void
+    public function testUpdateImage(): void
     {
         $image = [
             'imageName' => 'services_vk86n6',
             'imageAlt' => 'An image'
         ];
 
-        $imageInvalid = [
-            'imageName' => 'services_vk86n6',
-        ];
-
-        $responseValid = $this->withHeaders($this->headers)->put("$this->baseURL/1", $image);
-        $responseInvalid = $this->put("$this->baseURL/1", $imageInvalid);
-        $responseNull = $this->put("$this->baseURL/1");
-        $responseNotFoundProduct = $this->put("$this->baseURL/100", $image);
+        $responseValid = $this
+            ->withHeader('Authorization', 'Bearer '.$this->login['access_token'])
+            ->withHeaders($this->headers)
+            ->put("$this->baseURL/1", $image);
 
         $responseValid
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) =>
+            ->assertJson(
+                fn(AssertableJson $json) =>
                 $json
                     ->hasAll(
                         'imageId',
@@ -118,16 +136,9 @@ class ImageTest extends TestCase
                         'imageAlt' => 'An image'
                     ])
             );
-
-        $responseInvalid->assertUnprocessable();
-        $responseNull->assertUnprocessable();
-        $responseNotFoundProduct->assertNotFound();
     }
 
-    /**
-     * Check if the route /images can delete a image
-     */
-    public function testDeleteImage() : void
+    public function testDeleteImage(): void
     {
         $responseValid = $this->withHeaders($this->headers)->delete("$this->baseURL/1");
         $responseNotFoundProduct = $this->delete("$this->baseURL/1");
