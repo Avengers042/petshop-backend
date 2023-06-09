@@ -34,7 +34,7 @@ class StoreUserRequest extends FormRequest
             'birthday' => ['required'],
             'password' => ['required'],
             'addressId' => ['required'],
-            'shoppingCartId' => ['nullable']
+            'shoppingCartId' => ['nullable'],
         ];
     }
 
@@ -51,10 +51,8 @@ class StoreUserRequest extends FormRequest
             'BIRTHDAY' => $this->birthday,
             'PASSWORD' => $this->password,
             'ADDRESS_ID' => $this->addressId,
+            'SHOPPING_CART_ID' => $this->shoppingCartId
         ]);
-
-        if ($this->shoppingCartId)
-            $this->merge(['SHOPPING_CART_ID' => $this->shoppingCartId]);
     }
 
     /**

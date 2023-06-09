@@ -40,7 +40,7 @@ class UpdateUserRequest extends FormRequest
             'birthday' => [$sometimes, 'required'],
             'password' => [$sometimes, 'required'],
             'addressId' => [$sometimes, 'required'],
-            'shoppingCartId' => [$sometimes, 'nullable']
+            'shoppingCartId' => ['nullable']
         ];
     }
 
