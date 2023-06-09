@@ -33,20 +33,20 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::middleware('auth:sanctum')->apiResource('users', UserController::class)->only('update');
     Route::apiResource('users', UserController::class)->except('update');
 
-    Route::middleware('auth:sanctum')->apiResource('stocks', StockController::class)->only(['create', 'update']);
-    Route::apiResource('stocks', StockController::class)->except(['create', 'update']);
+    Route::middleware('auth:sanctum')->apiResource('stocks', StockController::class)->only(['store', 'update']);
+    Route::apiResource('stocks', StockController::class)->except(['store', 'update']);
 
-    Route::middleware('auth:sanctum')->apiResource('products', ProductController::class)->only(['create', 'update']);
-    Route::apiResource('products', ProductController::class)->except(['create', 'update']);
+    Route::middleware('auth:sanctum')->apiResource('products', ProductController::class)->only(['store', 'update']);
+    Route::apiResource('products', ProductController::class)->except(['store', 'update']);
 
-    Route::middleware('auth:sanctum')->apiResource('images', ImageController::class)->only(['create', 'update']);
-    Route::apiResource('images', ImageController::class)->except(['create', 'update']);
+    Route::middleware('auth:sanctum')->apiResource('images', ImageController::class)->only(['store', 'update']);
+    Route::apiResource('images', ImageController::class)->except(['store', 'update']);
 
-    Route::middleware('auth:sanctum')->apiResource('categories', CategoryController::class)->only(['create', 'update']);
-    Route::apiResource('categories', CategoryController::class)->except(['create', 'update']);
+    Route::middleware('auth:sanctum')->apiResource('categories', CategoryController::class)->only(['store', 'update']);
+    Route::apiResource('categories', CategoryController::class)->except(['store', 'update']);
 
-    Route::middleware('auth:sanctum')->apiResource('carts', ShoppingCartController::class)->only(['create', 'update']);
-    Route::apiResource('carts', ShoppingCartController::class)->except(['create', 'update']);
+    Route::middleware('auth:sanctum')->apiResource('carts', ShoppingCartController::class)->only(['store', 'update']);
+    Route::apiResource('carts', ShoppingCartController::class)->except(['store', 'update']);
 
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout')->middleware('auth:sanctum');

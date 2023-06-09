@@ -3,9 +3,9 @@
 namespace App\Http\Resources\ShoppingCart;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShoppingCartResource extends ResourceCollection
+class ShoppingCartResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.

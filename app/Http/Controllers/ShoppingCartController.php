@@ -7,6 +7,7 @@ use App\Http\Requests\ShoppingCart\UpdateShoppingCartRequest;
 use App\Http\Resources\ShoppingCart\ShoppingCartCollection;
 use App\Http\Resources\ShoppingCart\ShoppingCartResource;
 use App\Models\ShoppingCart;
+use Illuminate\Support\Facades\Log;
 
 class ShoppingCartController extends Controller
 {
