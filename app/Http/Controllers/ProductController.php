@@ -14,19 +14,24 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-     public function index(Request $request)
-     {
-         $page = 1;
-         $totalPerPage = 18;
- 
-         if (!empty($request->query('page')))
-             $page = $request->query('page');
- 
-         if (!empty($request->query('totalPerPage')))
-             $totalPerPage = $request->query('totalPerPage');
- 
-         return response()->json(new ProductCollection(Product::all()->forPage($page, $totalPerPage)));
-     }
+    public function index(Request $request)
+    {
+        $products = Product::all();
+
+        if (! empty($request->query('page'))) {
+            $page = $request->query('page') || 1;
+            $totalPerPage = 10;
+
+            if (!empty($request->query('totalPerPage')))
+                $totalPerPage = $request->query('totalPerPage');
+
+            $products = Product::all()->forPage($page, $totalPerPage);
+        }
+
+
+
+        return response()->json(new ProductCollection($products));
+    }
 
     /**
      * Store a newly created resource in storage.
