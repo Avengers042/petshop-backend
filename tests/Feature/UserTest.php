@@ -67,34 +67,4 @@ class UserTest extends TestCase
 
         $responseInvalid->assertNotFound();
     }
-
-    /**
-     * Check if the route /users can create a user
-     *
-     * @doesNotPerformAssertions
-     */
-    public function testCreateUser() : void
-    {
-        //todo
-    }
-
-    /**
-     * Check if the route /users can update a user
-     *
-     * @doesNotPerformAssertions
-     */
-    public function testUpdateUser() : void
-    {
-        //todo
-    }
-
-    /**
-     * Check if the route /users can delete a user
-     *
-     * @doesNotPerformAssertions
-     */
-    public function testDeleteUser() : void
-    {
-        //todo
-    }
 }

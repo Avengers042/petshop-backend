@@ -6,8 +6,6 @@ use Database\Seeders\ShoppingCartSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\ShoppingCart;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class ShoppingCartTest extends TestCase

@@ -42,34 +42,4 @@ class StockTest extends TestCase
 
         $responseInvalid->assertNotFound();
     }
-
-    /**
-     * Check if the route /stocks can create a stock
-     *
-     * @doesNotPerformAssertions
-     */
-    public function testCreateStock() : void
-    {
-        //todo
-    }
-
-    /**
-     * Check if the route /stocks can update a stock
-     *
-     * @doesNotPerformAssertions
-     */
-    public function testUpdateStock() : void
-    {
-        //todo
-    }
-
-    /**
-     * Check if the route /stocks can delete a stock
-     *
-     * @doesNotPerformAssertions
-     */
-    public function testDeleteStock() : void
-    {
-        //todo
-    }
 }
