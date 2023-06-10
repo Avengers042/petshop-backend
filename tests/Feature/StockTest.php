@@ -2,19 +2,24 @@
 
 namespace tests\Feature;
 
-use App\Models\Product;
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\StockSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class StockTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
     protected $baseURL = '/api/stocks';
-    protected $seeder = StockSeeder::class;
+    protected $seeder = CategorySeeder::class;
     protected $headers = ['Accept' => 'application/json'];
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        (new StockSeeder)->run();
+    }
 
     /**
      * Check if the route /stocks return all 25 stocks registers

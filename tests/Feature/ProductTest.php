@@ -2,19 +2,24 @@
 
 namespace tests\Feature\ProductTest;
 
+use Database\Seeders\CategorySeeder;
 use Database\Seeders\ProductSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
     protected $baseURL = '/api/products';
-    protected $seeder = ProductSeeder::class;
+    protected $seeder = CategorySeeder::class;
     protected $headers = ['Accept' => 'application/json'];
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        (new ProductSeeder)->run();
+    }
 
     /**
      * Check if the route /products return all 25 products registers
