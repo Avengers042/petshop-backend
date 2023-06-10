@@ -29,6 +29,7 @@ class UpdatePurchaseRequest extends FormRequest
             'shoppingCartId' => [$sometimes, 'required'],
             'productId' => [$sometimes, 'required'],
             'userId' => [$sometimes, 'required'],
+            'amount' => [$sometimes, 'required']
         ];
     }
 
@@ -43,8 +44,11 @@ class UpdatePurchaseRequest extends FormRequest
         if ($this->userId)
             $this->merge(['USER_ID' => $this->userId]);
 
-        if ($this->userId)
+        if ($this->shoppingCartId)
             $this->merge(['SHOPPING_CART_ID' => $this->shoppingCartId]);
+
+        if ($this->amount)
+            $this->merge(['AMOUNT' => $this->amount]);
     }
 
     /**
@@ -58,6 +62,7 @@ class UpdatePurchaseRequest extends FormRequest
             'shoppingCartId.required' => 'Carrinho de compras inválido',
             'productId.required' => 'Produto inválido',
             'userId.required' => 'Usuário inválido',
+            'amount.required' => 'Usuário inválido'
         );
 
         return $messages;
