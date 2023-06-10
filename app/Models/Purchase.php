@@ -37,8 +37,8 @@ class Purchase extends Model
         return $this->belongsTo(User::class, 'USER_ID', 'USER_ID');
     }
 
-    public function shoppingCart() : HasOne
+    public function shoppingCart() : BelongsTo
     {
-        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID', 'SHOPPING_CART_ID');
+        return $this->belongsTo(ShoppingCart::class, 'SHOPPING_CART_ID', 'SHOPPING_CART_ID');
     }
 }
