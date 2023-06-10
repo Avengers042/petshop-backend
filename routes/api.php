@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::middleware('auth:sanctum')->apiResource('purchases', PurchaseController::class);
+    Route::middleware('auth:sanctum')->apiResource('shopping-carts', ShoppingCartController::class);
     
     Route::middleware('auth:sanctum')->apiResource('suppliers', SupplierController::class)->only(['store', 'update']);
     Route::apiResource('suppliers', SupplierController::class)->except(['store', 'update']);
@@ -44,9 +45,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
     Route::middleware('auth:sanctum')->apiResource('categories', CategoryController::class)->only(['store', 'update']);
     Route::apiResource('categories', CategoryController::class)->except(['store', 'update']);
-
-    Route::middleware('auth:sanctum')->apiResource('carts', ShoppingCartController::class)->only(['store', 'update']);
-    Route::apiResource('carts', ShoppingCartController::class)->except(['store', 'update']);
 
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout')->middleware('auth:sanctum');
