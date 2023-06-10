@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,15 +13,23 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $primaryKey = 'USER_ID';
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'FIRST_NAME',
+        'LAST_NAME',
+        'CPF',
+        'EMAIL',
+        'BIRTHDAY',
+        'PASSWORD',
+        'ADDRESS_ID',
+        'SHOPPING_CART_ID'
     ];
 
     /**
@@ -29,7 +38,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'PASSWORD',
         'remember_token',
     ];
 
@@ -39,6 +48,28 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'PASSWORD' => 'hashed',
     ];
+
+    /**
+     * Override the password output
+     */
+    public function getAuthPassword()
+    {
+        return $this->PASSWORD;
+    }
+
+    public function purchases() : HasMany
+    {
+        return $this->hasMany(Purchase::class, 'PURCHASE_ID');
+    }
+
+    public function address() : HasOne
+    {
+        return $this->hasOne(Address::class, 'ADDRESS_ID', 'ADDRESS_ID');
+    }
+
+    public function shoppingCarts(): HasOne {
+        return $this->hasOne(ShoppingCart::class, 'SHOPPING_CART_ID', 'SHOPPING_CART_ID');
+    }
 }
