@@ -9,7 +9,7 @@ class StoreShoppingCartRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         $user = $this->user();
         return $user != null && $user->tokenCan('create');
@@ -20,10 +20,13 @@ class StoreShoppingCartRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules() : array
     {
         return [
-            'shoppingCartId' => ['required'],
+            'shoppingCartId' => [
+                'required',
+                'unique:App\Models\ShoppingCart,SHOPPING_CART_ID'
+            ]
         ];
     }
 
@@ -42,10 +45,11 @@ class StoreShoppingCartRequest extends FormRequest
      *
      * @return array<string, string>
      */
-    public function messages(): array
+    public function messages() : array
     {
         return [
-            'shoppingCartId.required' => 'O ID do carrinho de compras é obrigatório.',
+            'shoppingCartId.required' => 'Carrinho de compras inválido.',
+            'shoppingCartId.unique' => 'Carrinho de compras já existe.',
         ];
     }
 }
