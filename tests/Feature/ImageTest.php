@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use Database\Seeders\ImageSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ImageTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
     protected $baseURL = '/api/images';
     protected $seeder = ImageSeeder::class;
     protected $headers = ['Accept' => 'application/json'];

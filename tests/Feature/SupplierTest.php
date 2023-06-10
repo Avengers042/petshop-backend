@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use Database\Seeders\SupplierSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class SupplierTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
     protected $baseURL = '/api/suppliers';
     protected $seeder = SupplierSeeder::class;
     protected $headers = ['Accept' => 'application/json'];

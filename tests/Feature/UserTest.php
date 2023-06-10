@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
     protected $baseURL = '/api/users';
     protected $seeder = UserSeeder::class;
     protected $headers = ['Accept' => 'application/json'];

@@ -6,12 +6,10 @@ use Database\Seeders\CategorySeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Foundation\Testing\WithFaker;
 
 class CategoryTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
 
     protected $baseURL = '/api/categories';
     protected $seeder = CategorySeeder::class;
@@ -22,9 +20,6 @@ class CategoryTest extends TestCase
      */
     public function testGetAllCategories() : void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
         $response = $this->withHeaders($this->headers)->get($this->baseURL);
 
         $response->assertStatus(200)->assertJsonCount(3);
@@ -35,9 +30,6 @@ class CategoryTest extends TestCase
      */
     public function testGetOneCategory() : void
     {
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
         $responseValid = $this->withHeaders($this->headers)->get("$this->baseURL/1");
         $responseInvalid = $this->withHeaders($this->headers)->get("$this->baseURL/100");
 

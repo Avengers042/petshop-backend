@@ -4,13 +4,12 @@ namespace Tests\Feature;
 
 use Database\Seeders\AddressSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class AddressTest extends TestCase
 {
-    use DatabaseMigrations, WithFaker;
+    use DatabaseMigrations;
     protected $baseURL = '/api/addresses';
     protected $seeder = AddressSeeder::class;
     protected $headers = ['Accept' => 'application/json'];
